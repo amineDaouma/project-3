@@ -1,0 +1,17 @@
+type Query {
+  info: String!
+  item(id: ID!): Item
+  allItems: [Item!]!
+}
+
+type Mutation {
+  createItem(description: String!, completed: Boolean!): Item!
+  updateItem(id: ID!, description: String, completed: Boolean): Item
+  deleteItem(id: ID!): Item
+}
+
+type Item {
+  id: ID!
+  description: String!
+  completed: Boolean!
+}
