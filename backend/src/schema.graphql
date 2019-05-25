@@ -1,11 +1,18 @@
 type Query {
-  routines: [Routine!]!
+  routines: [Routine]
+  user(id: ID!): User
+  users: [User]
+}
+
+type Mutation {
+  signup(name: String!): User
+  createRoutine(name: String!, ownedBy: ID!): Routine
 }
 
 type User {
-  id: ID! @id
+  id: ID!
   name: String!
-  routines: [Routine!]!
+  routines: [Routine]
 }
 
 type Routine {

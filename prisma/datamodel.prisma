@@ -1,7 +1,7 @@
 type User {
   id: ID! @id
   name: String!
-  routines: [Routine!]!
+  routines: [Routine]
 }
 
 type Routine {
