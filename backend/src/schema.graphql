@@ -1,17 +1,63 @@
+enum ItemOrderByInput {
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
 type Query {
   info: String!
   item(id: ID!): Item
-  allItems: [Item!]!
+  allItems(
+    orderBy: ItemOrderByInput
+    filter: String
+    boolFilter: Boolean
+    skip: Int
+    first: Int
+  ): Items
+}
+
+type Items {
+  items: [Item!]!
+  count: Int!
 }
 
 type Mutation {
   createItem(description: String!, completed: Boolean!): Item!
   updateItem(id: ID!, description: String, completed: Boolean): Item
   deleteItem(id: ID!): Item
+  signup(email: String!, password: String!, name: String!): ItemPayload
+  login(email: String!, password: String!): ItemPayload
+  vote(itemId: ID!): Vote
+}
+
+type Subscription {
+  newItem: Item
+  newVote: Vote
+}
+
+type Vote {
+  id: ID!
+  item: Item!
+  user: User!
 }
 
 type Item {
   id: ID!
   description: String!
   completed: Boolean!
+  createdBy: User
+  votes: [Vote!]!
+}
+
+type ItemPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  items: [Item!]!
 }

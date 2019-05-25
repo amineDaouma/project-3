@@ -8,6 +8,10 @@ Planned stack:
 
 - graphql-yoga
 
+**Todo**
+
+1. Make backend compatible with es6 (with Babel I suppose)
+
 **Resources**
 
 1. https://www.youtube.com/watch?v=aLipr7tTuA4
@@ -16,3 +20,9 @@ Planned stack:
 4. https://www.prisma.io/docs/prisma-server/authentication-and-security-kke4/
 5. https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
 6. https://www.howtographql.com/graphql-js/1-getting-started/
+
+**Workflow**
+Prisma - update Data Model
+
+- updata `datamodel.prisma`
+- use `prisma deploy` to confirm and migrate the chaneges to the underlying database schema

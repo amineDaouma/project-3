@@ -4,4 +4,21 @@ type Item {
   updatedAt: DateTime! @updatedAt
   description: String!
   completed: Boolean!
+  createdBy: User
+  votes: [Vote!]!
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  items: [Item!]!
+  votes: [Vote!]
+}
+
+type Vote {
+  id: ID! @id
+  item: Item!
+  user: User!
 }
