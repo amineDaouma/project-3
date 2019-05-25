@@ -1,0 +1,15 @@
+type Query {
+  routines: [Routine!]!
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  routines: [Routine!]!
+}
+
+type Routine {
+  id: ID!
+  name: String!
+  ownedBy: User!
+}
