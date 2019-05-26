@@ -248,6 +248,7 @@ export interface UserWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  username?: Maybe<String>;
 }>;
 
 export interface RoutineCreateInput {
