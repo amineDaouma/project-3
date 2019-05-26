@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 const createRoutine = (parent, args, context) => {
   return context.prisma.createRoutine({
     username: args.username,
@@ -7,7 +9,7 @@ const createRoutine = (parent, args, context) => {
   });
 };
 
-const signup = async (parents, args, context) => {
+const signup = async (parent, args, context) => {
   const usernameExists = await context.prisma.$exists.user({
     username: args.username
   });
@@ -17,6 +19,7 @@ const signup = async (parents, args, context) => {
     );
   }
 
+  args.password = await bcrypt.hash(args.password, 10);
   return context.prisma.createUser({
     ...args
   });

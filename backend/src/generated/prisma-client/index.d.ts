@@ -150,7 +150,9 @@ export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "username_ASC"
-  | "username_DESC";
+  | "username_DESC"
+  | "password_ASC"
+  | "password_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -222,6 +224,20 @@ export interface UserWhereInput {
   username_not_starts_with?: Maybe<String>;
   username_ends_with?: Maybe<String>;
   username_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
   routines_every?: Maybe<RoutineWhereInput>;
   routines_some?: Maybe<RoutineWhereInput>;
   routines_none?: Maybe<RoutineWhereInput>;
@@ -248,6 +264,7 @@ export interface UserCreateOneWithoutRoutinesInput {
 export interface UserCreateWithoutRoutinesInput {
   id?: Maybe<ID_Input>;
   username: String;
+  password: String;
 }
 
 export interface RoutineUpdateInput {
@@ -264,6 +281,7 @@ export interface UserUpdateOneRequiredWithoutRoutinesInput {
 
 export interface UserUpdateWithoutRoutinesDataInput {
   username?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutRoutinesInput {
@@ -278,6 +296,7 @@ export interface RoutineUpdateManyMutationInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   username: String;
+  password: String;
   routines?: Maybe<RoutineCreateManyWithoutOwnedByInput>;
 }
 
@@ -295,6 +314,7 @@ export interface RoutineCreateWithoutOwnedByInput {
 
 export interface UserUpdateInput {
   username?: Maybe<String>;
+  password?: Maybe<String>;
   routines?: Maybe<RoutineUpdateManyWithoutOwnedByInput>;
 }
 
@@ -381,6 +401,7 @@ export interface RoutineUpdateManyDataInput {
 
 export interface UserUpdateManyMutationInput {
   username?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface RoutineSubscriptionWhereInput {
@@ -439,11 +460,13 @@ export interface RoutineNullablePromise
 export interface User {
   id: ID_Output;
   username: String;
+  password: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   username: () => Promise<String>;
+  password: () => Promise<String>;
   routines: <T = FragmentableArray<Routine>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -460,6 +483,7 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   routines: <T = Promise<AsyncIterator<RoutineSubscription>>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -476,6 +500,7 @@ export interface UserNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   username: () => Promise<String>;
+  password: () => Promise<String>;
   routines: <T = FragmentableArray<Routine>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -706,6 +731,7 @@ export interface UserSubscriptionPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   username: String;
+  password: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -713,6 +739,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   username: () => Promise<String>;
+  password: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -720,6 +747,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
 }
 
 /*

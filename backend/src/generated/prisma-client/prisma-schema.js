@@ -248,6 +248,7 @@ type Subscription {
 type User {
   id: ID!
   username: String!
+  password: String!
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
 }
 
@@ -260,6 +261,7 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   username: String!
+  password: String!
   routines: RoutineCreateManyWithoutOwnedByInput
 }
 
@@ -271,6 +273,7 @@ input UserCreateOneWithoutRoutinesInput {
 input UserCreateWithoutRoutinesInput {
   id: ID
   username: String!
+  password: String!
 }
 
 type UserEdge {
@@ -283,11 +286,14 @@ enum UserOrderByInput {
   id_DESC
   username_ASC
   username_DESC
+  password_ASC
+  password_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   username: String!
+  password: String!
 }
 
 type UserSubscriptionPayload {
@@ -310,11 +316,13 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   username: String
+  password: String
   routines: RoutineUpdateManyWithoutOwnedByInput
 }
 
 input UserUpdateManyMutationInput {
   username: String
+  password: String
 }
 
 input UserUpdateOneRequiredWithoutRoutinesInput {
@@ -326,6 +334,7 @@ input UserUpdateOneRequiredWithoutRoutinesInput {
 
 input UserUpdateWithoutRoutinesDataInput {
   username: String
+  password: String
 }
 
 input UserUpsertWithoutRoutinesInput {
@@ -362,6 +371,20 @@ input UserWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   routines_every: RoutineWhereInput
   routines_some: RoutineWhereInput
   routines_none: RoutineWhereInput

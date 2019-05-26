@@ -5,7 +5,7 @@ type Query {
 }
 
 type Mutation {
-  signup(username: String!): User
+  signup(username: String!, password: String!): User
   createRoutine(username: String!, ownedBy: ID!): Routine
 }
 

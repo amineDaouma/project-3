@@ -1,6 +1,7 @@
 type User {
   id: ID! @id
   username: String!
+  password: String!
   routines: [Routine]
 }
 
