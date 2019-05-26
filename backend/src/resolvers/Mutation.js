@@ -1,13 +1,22 @@
 const createRoutine = (parent, args, context) => {
   return context.prisma.createRoutine({
-    name: args.name,
+    username: args.username,
     ownedBy: {
       connect: { id: args.ownedBy }
     }
   });
 };
 
-const signup = (parents, args, context) => {
+const signup = async (parents, args, context) => {
+  const usernameExists = await context.prisma.$exists.user({
+    username: args.username
+  });
+  if (usernameExists) {
+    throw new Error(
+      `${args.username} already exists. Please pick a different username.`
+    );
+  }
+
   return context.prisma.createUser({
     ...args
   });

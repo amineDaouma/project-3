@@ -5,18 +5,18 @@ type Query {
 }
 
 type Mutation {
-  signup(name: String!): User
-  createRoutine(name: String!, ownedBy: ID!): Routine
+  signup(username: String!): User
+  createRoutine(username: String!, ownedBy: ID!): Routine
 }
 
 type User {
   id: ID!
-  name: String!
+  username: String!
   routines: [Routine]
 }
 
 type Routine {
   id: ID!
-  name: String!
+  username: String!
   ownedBy: User!
 }

@@ -61,7 +61,7 @@ type Query {
 
 type Routine {
   id: ID!
-  name: String!
+  username: String!
   ownedBy: User!
 }
 
@@ -73,7 +73,7 @@ type RoutineConnection {
 
 input RoutineCreateInput {
   id: ID
-  name: String!
+  username: String!
   ownedBy: UserCreateOneWithoutRoutinesInput!
 }
 
@@ -84,7 +84,7 @@ input RoutineCreateManyWithoutOwnedByInput {
 
 input RoutineCreateWithoutOwnedByInput {
   id: ID
-  name: String!
+  username: String!
 }
 
 type RoutineEdge {
@@ -95,13 +95,13 @@ type RoutineEdge {
 enum RoutineOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  username_ASC
+  username_DESC
 }
 
 type RoutinePreviousValues {
   id: ID!
-  name: String!
+  username: String!
 }
 
 input RoutineScalarWhereInput {
@@ -119,20 +119,20 @@ input RoutineScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   AND: [RoutineScalarWhereInput!]
   OR: [RoutineScalarWhereInput!]
   NOT: [RoutineScalarWhereInput!]
@@ -157,16 +157,16 @@ input RoutineSubscriptionWhereInput {
 }
 
 input RoutineUpdateInput {
-  name: String
+  username: String
   ownedBy: UserUpdateOneRequiredWithoutRoutinesInput
 }
 
 input RoutineUpdateManyDataInput {
-  name: String
+  username: String
 }
 
 input RoutineUpdateManyMutationInput {
-  name: String
+  username: String
 }
 
 input RoutineUpdateManyWithoutOwnedByInput {
@@ -187,7 +187,7 @@ input RoutineUpdateManyWithWhereNestedInput {
 }
 
 input RoutineUpdateWithoutOwnedByDataInput {
-  name: String
+  username: String
 }
 
 input RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
@@ -216,20 +216,20 @@ input RoutineWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   ownedBy: UserWhereInput
   AND: [RoutineWhereInput!]
   OR: [RoutineWhereInput!]
@@ -247,7 +247,7 @@ type Subscription {
 
 type User {
   id: ID!
-  name: String!
+  username: String!
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
 }
 
@@ -259,7 +259,7 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  name: String!
+  username: String!
   routines: RoutineCreateManyWithoutOwnedByInput
 }
 
@@ -270,7 +270,7 @@ input UserCreateOneWithoutRoutinesInput {
 
 input UserCreateWithoutRoutinesInput {
   id: ID
-  name: String!
+  username: String!
 }
 
 type UserEdge {
@@ -281,13 +281,13 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  username_ASC
+  username_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  name: String!
+  username: String!
 }
 
 type UserSubscriptionPayload {
@@ -309,12 +309,12 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  name: String
+  username: String
   routines: RoutineUpdateManyWithoutOwnedByInput
 }
 
 input UserUpdateManyMutationInput {
-  name: String
+  username: String
 }
 
 input UserUpdateOneRequiredWithoutRoutinesInput {
@@ -325,7 +325,7 @@ input UserUpdateOneRequiredWithoutRoutinesInput {
 }
 
 input UserUpdateWithoutRoutinesDataInput {
-  name: String
+  username: String
 }
 
 input UserUpsertWithoutRoutinesInput {
@@ -348,20 +348,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   routines_every: RoutineWhereInput
   routines_some: RoutineWhereInput
   routines_none: RoutineWhereInput

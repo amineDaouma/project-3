@@ -1,0 +1,11 @@
+type User {
+  id: ID! @id
+  username: String!
+  routines: [Routine]
+}
+
+type Routine {
+  id: ID! @id
+  username: String!
+  ownedBy: User!
+}

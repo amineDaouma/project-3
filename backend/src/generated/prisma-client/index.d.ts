@@ -143,10 +143,14 @@ export interface ClientConstructor<T> {
 export type RoutineOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
+  | "username_ASC"
+  | "username_DESC";
 
-export type UserOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
+export type UserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "username_ASC"
+  | "username_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -169,20 +173,20 @@ export interface RoutineWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   ownedBy?: Maybe<UserWhereInput>;
   AND?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
   OR?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
@@ -204,20 +208,20 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   routines_every?: Maybe<RoutineWhereInput>;
   routines_some?: Maybe<RoutineWhereInput>;
   routines_none?: Maybe<RoutineWhereInput>;
@@ -232,7 +236,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface RoutineCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  username: String;
   ownedBy: UserCreateOneWithoutRoutinesInput;
 }
 
@@ -243,11 +247,11 @@ export interface UserCreateOneWithoutRoutinesInput {
 
 export interface UserCreateWithoutRoutinesInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  username: String;
 }
 
 export interface RoutineUpdateInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
   ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
 }
 
@@ -259,7 +263,7 @@ export interface UserUpdateOneRequiredWithoutRoutinesInput {
 }
 
 export interface UserUpdateWithoutRoutinesDataInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutRoutinesInput {
@@ -268,12 +272,12 @@ export interface UserUpsertWithoutRoutinesInput {
 }
 
 export interface RoutineUpdateManyMutationInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
 }
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  username: String;
   routines?: Maybe<RoutineCreateManyWithoutOwnedByInput>;
 }
 
@@ -286,11 +290,11 @@ export interface RoutineCreateManyWithoutOwnedByInput {
 
 export interface RoutineCreateWithoutOwnedByInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  username: String;
 }
 
 export interface UserUpdateInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
   routines?: Maybe<RoutineUpdateManyWithoutOwnedByInput>;
 }
 
@@ -323,7 +327,7 @@ export interface RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
 }
 
 export interface RoutineUpdateWithoutOwnedByDataInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
 }
 
 export interface RoutineUpsertWithWhereUniqueWithoutOwnedByInput {
@@ -347,20 +351,20 @@ export interface RoutineScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   AND?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
   OR?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
   NOT?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
@@ -372,11 +376,11 @@ export interface RoutineUpdateManyWithWhereNestedInput {
 }
 
 export interface RoutineUpdateManyDataInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
 }
 
 export interface RoutineSubscriptionWhereInput {
@@ -407,12 +411,12 @@ export interface NodeNode {
 
 export interface Routine {
   id: ID_Output;
-  name: String;
+  username: String;
 }
 
 export interface RoutinePromise extends Promise<Routine>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   ownedBy: <T = UserPromise>() => T;
 }
 
@@ -420,7 +424,7 @@ export interface RoutineSubscription
   extends Promise<AsyncIterator<Routine>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   ownedBy: <T = UserSubscription>() => T;
 }
 
@@ -428,18 +432,18 @@ export interface RoutineNullablePromise
   extends Promise<Routine | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   ownedBy: <T = UserPromise>() => T;
 }
 
 export interface User {
   id: ID_Output;
-  name: String;
+  username: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   routines: <T = FragmentableArray<Routine>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -455,7 +459,7 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   routines: <T = Promise<AsyncIterator<RoutineSubscription>>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -471,7 +475,7 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   routines: <T = FragmentableArray<Routine>>(args?: {
     where?: RoutineWhereInput;
     orderBy?: RoutineOrderByInput;
@@ -657,21 +661,21 @@ export interface RoutineSubscriptionPayloadSubscription
 
 export interface RoutinePreviousValues {
   id: ID_Output;
-  name: String;
+  username: String;
 }
 
 export interface RoutinePreviousValuesPromise
   extends Promise<RoutinePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
 }
 
 export interface RoutinePreviousValuesSubscription
   extends Promise<AsyncIterator<RoutinePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -701,21 +705,21 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
+  username: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
 }
 
 /*
