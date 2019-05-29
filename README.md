@@ -2,8 +2,6 @@
 
 A vague idea: A habit/commitment/goal tracker that scales according to your ability to follow through
 
-Planned stack:
+# FEATURES
 
-**Backend**
-
-- graphql-yoga
+- signup (building)
