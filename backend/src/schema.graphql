@@ -1,5 +1,6 @@
 type Query {
   routines: [Routine]
+  loggedInUser: User
   user(id: ID!): User
   users: [User]
 }

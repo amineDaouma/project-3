@@ -13,6 +13,11 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
+const setTokenLocally = async token => {
+  console.log(token);
+  localStorage.setItem("Authorization", `Bearer ${token}`);
+};
+
 // modify this later to work with an internal state and input fields
 const Signup = () => (
   //   const { username, password } = props;
@@ -22,6 +27,7 @@ const Signup = () => (
       username: "yoyo",
       password: "yoyo"
     }}
+    onCompleted={data => setTokenLocally(data.signup.token)}
   >
     {(signupMutation, { data, error }) => {
       if (data) console.log(data);

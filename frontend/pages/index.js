@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import Head from "../components/Head";
-import Nav from "../components/Nav";
 import Signup from "../components/Signup";
+import LoggedInUser from "../components/LoggedInUser";
 
 const Home = () => (
   <div>
+    <LoggedInUser />
     <Signup />
   </div>
 );

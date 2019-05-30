@@ -11,6 +11,9 @@ const createRoutine = (parent, args, context) => {
 };
 
 const signup = async (parent, args, context) => {
+  // const authorization = context.request.get("Authorization");
+  // console.log(authorization);
+  // check if username exists and throw error if it does
   const usernameExists = await context.prisma.$exists.user({
     username: args.username
   });
@@ -20,16 +23,26 @@ const signup = async (parent, args, context) => {
     );
   }
 
+  // hash the given password
   args.password = await bcrypt.hash(args.password, 10);
+
+  // create the user
   const user = await context.prisma.createUser({
     ...args
   });
 
+  // create the JWT based on a secret key
   const token = await jwt.sign({ id: user.id }, process.env.APP_SECRET);
+  // set the "Authorization" header of the cookie with the value of the token
+  // context.response.cookie("Authorization", `Bearer ${token}`, {
+  //   httpOnly: true,
+  //   maxAge: 1000 * 60 * 60 * 24 * 30 // 1 month cookie
+  // });
 
+  // since nextjs + apollo cookie passing game is still wonky, I'll resort to localStorage until it's fixed
   return {
-    token,
-    user
+    user,
+    token
   };
 };
 
