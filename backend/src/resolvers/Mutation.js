@@ -33,13 +33,15 @@ const signup = async (parent, args, context) => {
 
   // create the JWT based on a secret key
   const token = await jwt.sign({ id: user.id }, process.env.APP_SECRET);
+
+  //IMPORTANT
+  // since nextjs + apollo cookie passing game is still wonky, I'll resort to localStorage until it's fixed
   // set the "Authorization" header of the cookie with the value of the token
   // context.response.cookie("Authorization", `Bearer ${token}`, {
   //   httpOnly: true,
   //   maxAge: 1000 * 60 * 60 * 24 * 30 // 1 month cookie
   // });
 
-  // since nextjs + apollo cookie passing game is still wonky, I'll resort to localStorage until it's fixed
   return {
     user,
     token
