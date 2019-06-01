@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { gql } from "apollo-boost";
 import { Mutation } from "react-apollo";
+import NProgress from "nprogress";
 import withHeader from "./withHeader";
 
 const SIGNUP_MUTATION = gql`
@@ -51,10 +52,17 @@ class Signup extends Component {
         }}
         onCompleted={data => setTokenLocally(data.signup.token)}
       >
-        {(signupMutation, { data, error }) => {
-          // if (data) console.log(data);
+        {(signupMutation, { data, error, loading }) => {
+          {
+            loading ? NProgress.start() : NProgress.done();
+          }
           return (
             <div className="signup-container">
+              {error && (
+                <div className="errorAlert">
+                  <p>{`${error.message.replace("GraphQL error: ", "")}`}</p>
+                </div>
+              )}
               <div className="signup-content" />
               <form
                 method="post"
@@ -63,37 +71,50 @@ class Signup extends Component {
                   this.handleSubmit(e, signupMutation);
                 }}
               >
-                <label htmlFor="username">
-                  <p>Username</p>
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="your username"
-                    value={username}
-                    onChange={this.handleChange}
-                  />
-                  {error && (
-                    <p>{`${error.message.replace("GraphQL error: ", "")}`}</p>
-                  )}
-                </label>
-                <label htmlFor="password">
-                  <p>Password</p>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="your password"
-                    value={password}
-                    onChange={this.handleChange}
-                  />
-                </label>
-                <button type="submit">Submit</button>
+                <fieldset disabled={loading}>
+                  <label htmlFor="username">
+                    <p>Username</p>
+                    <input
+                      id="username"
+                      type="text"
+                      name="username"
+                      placeholder="your username"
+                      value={username}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                  <label htmlFor="password">
+                    <p>Password</p>
+                    <input
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="your password"
+                      value={password}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                  <button type="submit">Submit{loading ? "ting" : ""}</button>
+                </fieldset>
               </form>
-
-              {/* <button type="submit" onClick={signupMutation}> */}
-
               {data && <p>Successful signup</p>}
               <style jsx>
                 {`
+                  fieldset {
+                    border: none;
+                  }
+
+                  input:disabled {
+                    background-color: #9aa5b1;
+                  }
+
+                  button:disabled {
+                    background-color: hsla(214, 95%, 36%, 0.5);
+                    cursor: default;
+                  }
+                  button:disabled:hover {
+                    background-color: hsla(214, 95%, 36%, 0.5);
+                  }
                   label {
                     font-size: 16px;
                   }
@@ -139,6 +160,18 @@ class Signup extends Component {
 
                   h1 {
                     text-align: center;
+                  }
+
+                  .errorAlert {
+                    height: 64px;
+                    margin-top: -32px;
+                    margin-bottom: 32px;
+                    background-color: #ffe3e3;
+                    border-left: 5px #610316 solid;
+                    padding: 4px;
+                  }
+                  .errorAlert p {
+                    margin: 0px;
                   }
                 `}
               </style>

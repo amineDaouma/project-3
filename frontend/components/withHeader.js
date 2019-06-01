@@ -1,5 +1,4 @@
 // import React, { Component } from "react";
-
 const withHeader = (Component, headerName) => {
   return class extends React.Component {
     render() {
