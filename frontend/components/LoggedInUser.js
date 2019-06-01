@@ -4,7 +4,6 @@ import { gql } from "apollo-boost";
 const LOGGEDINUSER_QUERY = gql`
   query LOGGEDINUSER_QUERY {
     loggedInUser {
-      id
       username
     }
   }
@@ -13,8 +12,13 @@ const LOGGEDINUSER_QUERY = gql`
 const LoggedInUser = () => (
   <Query query={LOGGEDINUSER_QUERY}>
     {({ data, error, loading }) => {
-      //   console.log(data);
-      return <p>LoggedInUser</p>;
+      if (data) console.log(data);
+      if (data && data.loggedInUser) {
+        const { username } = data.loggedInUser;
+        return <p>{username}</p>;
+      }
+      // if (error) return <p>{error.message}</p>;
+      return <p>Guest</p>;
     }}
   </Query>
 );

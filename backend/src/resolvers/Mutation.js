@@ -13,8 +13,7 @@ const createRoutine = (parent, args, context) => {
 const signup = async (parent, args, context) => {
   if (!args.username || !args.password)
     throw new Error("One or both fields are empty. Please fill them in.");
-  // const authorization = context.request.get("Authorization");
-  // console.log(authorization);
+
   // check if username exists and throw error if it does
   const usernameExists = await context.prisma.$exists.user({
     username: args.username

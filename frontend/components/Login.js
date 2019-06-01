@@ -5,9 +5,9 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import withHeader from "./withHeader";
 
-const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION($username: String!, $password: String!) {
-    signup(username: $username, password: $password) {
+const LOGIN_MUTATION = gql`
+  mutation LOGIN_MUTATION($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
       token
       user {
         id
@@ -22,7 +22,7 @@ const setTokenLocally = async token => {
 };
 
 // modify this later to work with an internal state and input fields
-class Signup extends Component {
+class Login extends Component {
   state = {
     username: "",
     password: ""
@@ -34,9 +34,9 @@ class Signup extends Component {
     });
   };
 
-  handleSubmit = async (e, signupMutation) => {
+  handleSubmit = async (e, loginMutation) => {
     e.preventDefault();
-    await signupMutation();
+    await loginMutation();
     this.setState({
       username: "",
       password: ""
@@ -46,17 +46,17 @@ class Signup extends Component {
     const { username, password } = this.state;
     return (
       <Mutation
-        mutation={SIGNUP_MUTATION}
+        mutation={LOGIN_MUTATION}
         variables={{
           username,
           password
         }}
         onCompleted={data => {
-          setTokenLocally(data.signup.token);
+          setTokenLocally(data.login.token);
           Router.push("/");
         }}
       >
-        {(signupMutation, { data, error, loading }) => {
+        {(loginMutation, { data, error, loading }) => {
           {
             loading ? NProgress.start() : NProgress.done();
           }
@@ -72,7 +72,7 @@ class Signup extends Component {
                 method="post"
                 onSubmit={e => {
                   e.preventDefault();
-                  this.handleSubmit(e, signupMutation);
+                  this.handleSubmit(e, loginMutation);
                 }}
               >
                 <fieldset disabled={loading}>
@@ -98,10 +98,12 @@ class Signup extends Component {
                       onChange={this.handleChange}
                     />
                   </label>
-                  <button type="submit">Submit{loading ? "ting" : ""}</button>
+                  <button type="submit">
+                    Log{loading ? "ging In" : " In"}
+                  </button>
                 </fieldset>
               </form>
-              {data && <p>Successful signup</p>}
+              {data && <p>Successful login</p>}
               <style jsx>
                 {`
                   fieldset {
@@ -188,4 +190,4 @@ class Signup extends Component {
 }
 
 // export default Signup;
-export default withHeader(Signup, "Sign Up");
+export default withHeader(Login, "Log In");

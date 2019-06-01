@@ -1,13 +1,17 @@
+const jwt = require("jsonwebtoken");
+
 const routines = (root, args, context) => {
   return context.prisma.routines();
 };
 
 const loggedInUser = async (root, args, context) => {
-  const id = await context.request.id;
-  console.log("Calling loggedInUser");
-  // console.log(context.request);
-
-  // console.log(id);
+  const authorization = context.request.get("Authorization");
+  const { id } = jwt.verify(
+    authorization.replace("Bearer ", ""),
+    process.env.APP_SECRET
+  );
+  // const id = await context.request.id;
+  console.log(id);
   if (id) {
     return await context.prisma.user({
       id
