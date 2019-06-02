@@ -50,6 +50,8 @@ const signup = async (parent, args, context) => {
 };
 
 const login = async (parent, args, context) => {
+  if (!args.username || !args.password)
+    throw new Error("One or both fields are empty. Please fill them in.");
   // checks if the user exists and allows the user to login if that is true
   const user = await context.prisma.user({
     username: args.username

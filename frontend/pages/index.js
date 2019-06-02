@@ -6,7 +6,7 @@ import LoggedInUser from "../components/LoggedInUser";
 const Home = () => (
   <div>
     <Navbar />
-    <LoggedInUser />
+    {/* <LoggedInUser /> */}
   </div>
 );
 

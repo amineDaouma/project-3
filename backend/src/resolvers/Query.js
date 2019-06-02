@@ -6,13 +6,12 @@ const routines = (root, args, context) => {
 
 const loggedInUser = async (root, args, context) => {
   const authorization = context.request.get("Authorization");
-  const { id } = jwt.verify(
-    authorization.replace("Bearer ", ""),
-    process.env.APP_SECRET
-  );
-  // const id = await context.request.id;
-  console.log(id);
-  if (id) {
+  console.log(authorization);
+  if (authorization) {
+    const { id } = jwt.verify(
+      authorization.replace("Bearer ", ""),
+      process.env.APP_SECRET
+    );
     return await context.prisma.user({
       id
     });
