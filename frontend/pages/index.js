@@ -1,21 +1,27 @@
-import Link from "next/link";
-import Signup from "../components/Signup";
+import { ApolloConsumer } from "react-apollo";
+import LoggedInUser from "../components/LoggedInUser";
 import Navbar from "../components/Navbar";
 import Routines from "../components/Routines";
-import LoggedInUser from "../components/LoggedInUser";
 
 const Home = () => (
-  <div className="Home">
-    <Navbar />
-    <Routines />
-    <style jsx>
-      {`
-        .Home {
-          margin: 0px 12px;
-        }
-      `}
-    </style>
-  </div>
+  <ApolloConsumer>
+    {client => (
+      <div className="Home">
+        <LoggedInUser>
+          {({ data }) => <Navbar client={client} data={data} />}
+        </LoggedInUser>
+
+        {/* <Routines /> */}
+        <style jsx>
+          {`
+            .Home {
+              margin: 0px 12px;
+            }
+          `}
+        </style>
+      </div>
+    )}
+  </ApolloConsumer>
 );
 
 export default Home;
