@@ -3,6 +3,7 @@ import { gql } from "apollo-boost";
 import { Mutation } from "react-apollo";
 import Router from "next/router";
 import NProgress from "nprogress";
+import { LOGGEDINUSER_QUERY } from "./LoggedInUser";
 import withHeader from "./withHeader";
 
 const SIGNUP_MUTATION = gql`
@@ -52,8 +53,20 @@ class Signup extends Component {
           password
         }}
         onCompleted={data => {
-          setTokenLocally(data.signup.token);
           Router.push("/");
+        }}
+        update={(cache, { data: { signup } }) => {
+          cache.writeQuery({
+            query: LOGGEDINUSER_QUERY,
+            data: {
+              __typename: "Mutation",
+              loggedInUser: {
+                __typename: "User",
+                username: signup.user.username
+              }
+            }
+          });
+          setTokenLocally(signup.token);
         }}
       >
         {(signupMutation, { data, error, loading }) => {

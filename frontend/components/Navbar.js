@@ -22,7 +22,7 @@ const removeTokenAndUpdateCache = client => {
 const Navbar = props => (
   <ApolloConsumer>
     {client => (
-      <div>
+      <div className="navbar">
         <LoggedInUser>
           {({ data }) => {
             console.log(data);
@@ -30,7 +30,7 @@ const Navbar = props => (
               const { username } = data.loggedInUser;
               return (
                 <>
-                  <span>{username}</span>
+                  {/* <a className="user">{username}</a> */}
                   <Link href="/">
                     <a onClick={() => removeTokenAndUpdateCache(client)}>
                       Log Out
@@ -40,27 +40,54 @@ const Navbar = props => (
               );
             }
             return (
-              <div>
+              <>
                 <Link href="signup">
                   <a>Sign Up</a>
                 </Link>
                 <Link href="login">
                   <a>Log In</a>
                 </Link>
-              </div>
+              </>
             );
           }}
         </LoggedInUser>
         <style jsx>
           {`
-            div {
+            .navbar {
+              padding: 8px 0px;
               display: flex;
               flex-direction: row;
-              justify-content: flex-start;
+              justify-content: flex-end;
               background: white;
+              margin: 8px 0px;
+              border: 1px solid white;
+              border-radius: 5px;
+              box-shadow: 0px 3px 5px rgba(154, 165, 177, 0.8);
+            }
+
+            .user:hover {
+              color: black;
+              background: none;
             }
             a {
-              margin-left: 16px;
+              padding: 4px 8px;
+              font-size: 16px;
+              text-decoration: none;
+              margin-right: 24px;
+            }
+
+            a:hover {
+              color: white;
+              background: #2186eb;
+              border-radius: 5px;
+            }
+
+            a:visited {
+              color: black;
+            }
+
+            a:visited:hover {
+              color: white;
             }
           `}
         </style>

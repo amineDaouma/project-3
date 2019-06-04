@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const routines = (root, args, context) => {
-  return context.prisma.routines();
-};
+// const routines = (root, args, context) => {
+//   return context.prisma.routines();
+// };
 
 const loggedInUser = async (root, args, context) => {
   const authorization = context.request.get("Authorization");
@@ -16,6 +16,7 @@ const loggedInUser = async (root, args, context) => {
       id
     });
   }
+  console.log("No authorization");
   return null;
 };
 
@@ -30,7 +31,6 @@ const users = (root, args, context) => {
 };
 
 module.exports = {
-  routines,
   user,
   users,
   loggedInUser

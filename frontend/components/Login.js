@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { gql } from "apollo-boost";
+import { gql, fromPromise } from "apollo-boost";
 import { Mutation } from "react-apollo";
 import Router from "next/router";
 import NProgress from "nprogress";
+import { LOGGEDINUSER_QUERY } from "./LoggedInUser";
 import withHeader from "./withHeader";
+import { sleep } from "../lib/utils";
 
 const LOGIN_MUTATION = gql`
   mutation LOGIN_MUTATION($username: String!, $password: String!) {
@@ -17,7 +19,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const setTokenLocally = async token => {
+const setTokenLocally = token => {
   localStorage.setItem("Authorization", `Bearer ${token}`);
 };
 
@@ -51,9 +53,29 @@ class Login extends Component {
           username,
           password
         }}
+        // use update to setTokenLocally first and write locally
+        // when we change routes, the next request should have the correct token
+        // in the header
         onCompleted={data => {
-          setTokenLocally(data.login.token);
+          //
           Router.push("/");
+        }}
+        //this prop and the cache.writeQuery is required if we want to give time
+        //for setContext in withApollo to set the token in the request header.
+        //The token is needed if we want the redirected index page to successfully
+        //query for logged-in user
+        update={(cache, { data: { login } }) => {
+          cache.writeQuery({
+            query: LOGGEDINUSER_QUERY,
+            data: {
+              __typename: "Mutation",
+              loggedInUser: {
+                __typename: "User",
+                username: login.user.username
+              }
+            }
+          });
+          setTokenLocally(login.token);
         }}
       >
         {(loginMutation, { data, error, loading }) => {
@@ -72,6 +94,7 @@ class Login extends Component {
                 method="post"
                 onSubmit={e => {
                   e.preventDefault();
+
                   this.handleSubmit(e, loginMutation);
                 }}
               >
@@ -143,10 +166,10 @@ class Login extends Component {
                     display: block;
                     width: 128px;
                     margin: auto;
-                    background: #0552b5;
                     border-radius: 5px;
                     font-size: 20px;
                     color: #f5f7fa;
+                    background: #0552b5;
                     padding: 8px;
                     border: none;
                     cursor: pointer;

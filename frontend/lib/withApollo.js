@@ -9,8 +9,8 @@ const httpLink = new HttpLink({
   credentials: "include"
 });
 
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("Authorization");
+const authLink = setContext(async (_, { headers }) => {
+  const token = await localStorage.getItem("Authorization");
   return {
     headers: {
       ...headers,
@@ -30,9 +30,7 @@ export default withApollo(
           fetchOptions: {
             credentials: "include"
           },
-          headers: {
-            cookies: headers && headers.cookie
-          }
+          headers
         });
       }
     })
