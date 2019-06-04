@@ -8,7 +8,7 @@ type Query {
 type Mutation {
   signup(username: String!, password: String!): AuthPayload
   login(username: String!, password: String!): AuthPayload
-  createRoutine(username: String!, ownedBy: ID!): Routine
+  createRoutine(name: String!): Routine
 }
 
 type User {
@@ -19,7 +19,7 @@ type User {
 
 type Routine {
   id: ID!
-  username: String!
+  name: String!
   ownedBy: User!
 }
 

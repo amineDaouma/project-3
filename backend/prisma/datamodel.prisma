@@ -7,6 +7,6 @@ type User {
 
 type Routine {
   id: ID! @id
-  username: String!
+  name: String!
   ownedBy: User!
 }
