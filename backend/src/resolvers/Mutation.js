@@ -2,12 +2,23 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authorise = require("../utils/authorise");
 
-const createRoutine = (parent, args, context) => {
+const createRoutine = async (parent, { name }, context, info) => {
   const token = context.request.get("Authorization");
-  // console.log(token);
   const id = authorise(token);
-  if (id) console.log("You are authorised");
-  else throw Error("You are not logged in");
+  if (id) {
+    const routine = await context.prisma.createRoutine(
+      {
+        name,
+        ownedBy: {
+          connect: {
+            id
+          }
+        }
+      },
+      info
+    );
+    return routine;
+  } else throw Error("You are not logged in");
 };
 
 const signup = async (parent, args, context) => {

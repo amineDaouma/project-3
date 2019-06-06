@@ -3,6 +3,8 @@ type Query {
   loggedInUser: User
   user(id: ID!): User
   users: [User]!
+  routine(id: ID!): Routine
+  routines(id: ID!): [Routine]
 }
 
 type Mutation {

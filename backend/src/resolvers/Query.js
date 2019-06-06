@@ -5,18 +5,19 @@ const jwt = require("jsonwebtoken");
 // };
 
 const loggedInUser = async (root, args, context) => {
+  console.log("Calling loggedInUser");
   const authorization = context.request.get("Authorization");
-  console.log(authorization);
   if (authorization) {
     const { id } = jwt.verify(
       authorization.replace("Bearer ", ""),
       process.env.APP_SECRET
     );
-    return await context.prisma.user({
+    const user = await context.prisma.user({
       id
     });
+    console.log(user);
+    return user;
   }
-  console.log("No authorization");
   return null;
 };
 
@@ -30,8 +31,25 @@ const users = (root, args, context) => {
   return context.prisma.users();
 };
 
+const routine = (root, args, context) => {
+  return context.prisma.routine({
+    id: args.id
+  });
+};
+
+const routines = (root, args, context) => {
+  console.log("Debug: Calling routines");
+  const routines = context.prisma.routines({
+    id: args.id
+  });
+  console.log(routines);
+  return routines;
+};
+
 module.exports = {
   user,
   users,
-  loggedInUser
+  loggedInUser,
+  routine,
+  routines
 };

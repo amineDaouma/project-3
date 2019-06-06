@@ -8,10 +8,18 @@ const Home = () => (
     {client => (
       <div className="Home">
         <LoggedInUser>
-          {({ data }) => <Navbar client={client} data={data} />}
+          {({ data, error }) => {
+            if (error) {
+              console.log(error);
+            }
+            return (
+              <>
+                {data && <Navbar client={client} data={data} />}
+                {data.loggedInUser && <Routines data={data} />}
+              </>
+            );
+          }}
         </LoggedInUser>
-
-        {/* <Routines /> */}
         <style jsx>
           {`
             .Home {

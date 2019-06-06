@@ -66,6 +66,7 @@ const Navbar = props => {
         <Link href="/">
           <a onClick={() => removeTokenAndUpdateCache(client)}>Log Out</a>
         </Link>
+
         <style jsx>{navbarStyle}</style>
       </div>
     );

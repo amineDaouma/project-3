@@ -6,12 +6,13 @@ const { prisma } = require("./generated/prisma-client");
 const Mutation = require("./resolvers/Mutation");
 const Query = require("./resolvers/Query");
 const User = require("./resolvers/User");
+const Routine = require("./resolvers/Routine");
 
 // server instantiation
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
-  resolvers: { Query, Mutation, User },
+  resolvers: { Query, Mutation, User, Routine },
   context: req => ({ ...req, prisma })
 });
 

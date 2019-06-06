@@ -57,7 +57,6 @@ class Login extends Component {
         // when we change routes, the next request should have the correct token
         // in the header
         onCompleted={data => {
-          //
           Router.push("/");
         }}
         //this prop and the cache.writeQuery is required if we want to give time
