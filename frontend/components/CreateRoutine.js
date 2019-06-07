@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
-// import addIcon from "../static/icons/icon-add.svg";
-// import LOGGEDINUSER_QUERY from "./LoggedInUser";
+import AddIconSVG from "./AddIconSVG";
 
 const CREATE_ROUTINE_MUTATION = gql`
   mutation CREATE_ROUTINE_MUTATION($name: String!) {
@@ -32,7 +31,8 @@ const LOGGEDINUSER_QUERY = gql`
 class CreateRoutine extends Component {
   state = {
     name: "",
-    active: false
+    active: false,
+    addIconColor: "#1CD4D4"
   };
   handleChange = e => {
     this.setState({
@@ -46,11 +46,14 @@ class CreateRoutine extends Component {
     e.preventDefault();
     await mutation();
     this.setState({
-      name: ""
+      name: "",
+      active: false
     });
   };
   render() {
-    const { name, active } = this.state;
+    const { name, active, addIconColor } = this.state;
+    // console.log(addIcon);
+
     if (active) {
       return (
         <Mutation
@@ -148,7 +151,49 @@ class CreateRoutine extends Component {
         </Mutation>
       );
     }
-    return <p>Hallo {addIcon}</p>;
+    return (
+      <div>
+        <div
+          onClick={() => {
+            this.setState({
+              active: true
+            });
+          }}
+          onMouseOver={() => {
+            this.setState({
+              addIconColor: "#1CD4D4"
+            });
+          }}
+          onMouseLeave={() => {
+            this.setState({
+              addIconColor: "#62F4EB"
+            });
+          }}
+          className="svg-container"
+        >
+          <AddIconSVG className="add" fill={addIconColor} />
+        </div>
+        <hr />
+        <style jsx>{`
+          .svg-container {
+            border-radius: 25%;
+            width: 48px;
+            margin: 0px auto;
+            cursor: pointer;
+          }
+          .svg-container:hover {
+            background: hsla(214, 15%, 91%, 0.25);
+          }
+          hr {
+            border: 0;
+            height: 0;
+            width: 50%;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+          }
+        `}</style>
+      </div>
+    );
   }
 }
 

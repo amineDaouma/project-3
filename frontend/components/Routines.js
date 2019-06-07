@@ -19,8 +19,6 @@ const Routines = props => {
   return (
     <div className="routine">
       <CreateRoutine />
-      <UpdateRoutine />
-      <DeleteRoutine />
       {routines.map(routineData => (
         <SingleRoutine key={routineData.id} routineData={routineData} />
       ))}
