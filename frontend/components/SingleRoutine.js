@@ -15,12 +15,23 @@ class SingleRoutine extends Component {
         <div
           className="svg-container"
           onMouseOver={() =>
-            this.setState({ innerFill: "hsla(214, 15%, 95%, 1)" })
+            completed
+              ? ""
+              : this.setState({ innerFill: "hsla(214, 15%, 95%, 1)" })
           }
-          onMouseLeave={() => this.setState({ innerFill: "white" })}
+          onMouseLeave={() =>
+            completed ? "" : this.setState({ innerFill: "white" })
+          }
           onClick={() => {
             completed = !completed;
-            this.setState({ completed });
+            if (completed) {
+              innerFill = "#0552b5";
+              outerFill - "#0552b5";
+            } else {
+              innerFill = "white";
+              outerFill = "#9AA5B1";
+            }
+            this.setState({ completed, innerFill, outerFill });
           }}
         >
           <CircleIconSVG
@@ -32,7 +43,7 @@ class SingleRoutine extends Component {
         <span>{name}</span>
         <style jsx>{`
           .container {
-            margin: 16px 24px;
+            margin: 16px 128px;
             height: 30px;
           }
           span {
@@ -40,13 +51,15 @@ class SingleRoutine extends Component {
             padding-bottom: 100px;
           }
           .svg-container {
+            border-radius: 50%;
+            background: ${innerFill};
+            border: 0.1px solid ${outerFill};
             cursor: pointer;
             position: relative;
             top: 4px;
-            padding: 0;
             display: inline-block;
             width: 24px;
-            height: 20px;
+            height: 23px;
           }
         `}</style>
       </div>
