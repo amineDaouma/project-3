@@ -6,7 +6,6 @@ import Head from "next/head";
 class MyApp extends App {
   render() {
     const { Component, pageProps, apollo } = this.props;
-
     return (
       <Container>
         <ApolloProvider client={apollo}>
@@ -34,7 +33,7 @@ class MyApp extends App {
                 padding: 0px;
               }
               body {
-                background: #e4e7eb;
+                background: #cbd2d9;
               }
             `}
           </style>

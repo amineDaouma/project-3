@@ -14,9 +14,13 @@ const LOGGEDINUSER_QUERY = gql`
   }
 `;
 
-const LoggedInUser = props => (
-  <Query query={LOGGEDINUSER_QUERY}>{payload => props.children(payload)}</Query>
-);
+const LoggedInUser = props => {
+  return (
+    <Query query={LOGGEDINUSER_QUERY}>
+      {payload => props.children(payload)}
+    </Query>
+  );
+};
 
 export { LOGGEDINUSER_QUERY };
 

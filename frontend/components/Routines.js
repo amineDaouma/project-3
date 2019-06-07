@@ -15,11 +15,7 @@ const ROUTINES_QUERY = gql`
 `;
 
 const Routines = props => {
-  // console.log("Debug Routines");
-  // console.log(props.data);
   const { routines } = props.data.loggedInUser;
-  console.log("Dbg -> routines for user");
-  console.log(routines);
   return (
     <div className="routine">
       <CreateRoutine />
@@ -32,9 +28,6 @@ const Routines = props => {
         {`
           .routine {
             padding: 8px 0px;
-            /*display: flex;
-          flex-direction: row;
-          justify-content: flex-end;*/
             background: white;
             margin: 8px 0px;
             border: 1px solid white;
