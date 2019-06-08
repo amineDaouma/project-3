@@ -30,10 +30,11 @@ class MyApp extends App {
               body {
                 font-family: "Lato", sans-serif;
                 margin: 0px;
-                padding: 0px;
+                height: 100vh;
               }
               body {
                 background: #cbd2d9;
+                padding-top: 0.01px;
               }
             `}
           </style>

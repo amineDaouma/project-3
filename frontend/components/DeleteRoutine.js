@@ -24,7 +24,25 @@ const DeleteRoutine = () => {
       {(createRoutine, payload) => (
         <>
           <button onClick={createRoutine}>Delete</button>
-          <style jsx>{``}</style>
+          <style jsx>
+            {`
+              button {
+                border-radius: 4px;
+                padding: 4px 8px;
+                display: block;
+                margin-left: 8px;
+                font-size: 16px;
+                border: none;
+                color: #9aa5b1;
+                background: #f5f7fa;
+                cursor: pointer;
+              }
+              button:hover {
+                color: #e12d39;
+                background: #cbd2d9;
+              }
+            `}
+          </style>
         </>
       )}
     </Mutation>

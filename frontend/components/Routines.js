@@ -25,9 +25,9 @@ const Routines = props => {
       <style jsx>
         {`
           .routine {
+            margin: 8px 0px;
             padding: 8px 0px;
             background: white;
-            margin: 8px 0px;
             border: 1px solid white;
             border-radius: 5px;
             box-shadow: 0px 3px 5px rgba(154, 165, 177, 0.8);

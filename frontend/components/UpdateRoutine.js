@@ -1,34 +1,49 @@
+import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
+import PropTypes from "prop-types";
 
-const CREATE_ROUTINE_MUTATION = gql`
-  mutation CREATE_ROUTINE_MUTATION($name: String!) {
-    createRoutine(name: $name) {
-      id
-      name
-      ownedBy {
-        id
-        username
-      }
+class UpdateRoutine extends Component {
+  render() {
+    const { isEdited } = this.props;
+    let backgroundColor,
+      hoverBackgroundColor,
+      color = "";
+    // let color = "";
+    if (!isEdited) {
+      backgroundColor = "#f5f7fa";
+      color = "#9aa5b1";
+    } else {
+      backgroundColor = "#0552b5";
+      color = "white";
+      hoverBackgroundColor = "#2186eb";
     }
+    return (
+      <>
+        <button>Update</button>
+        <style jsx>{`
+          button {
+            border-radius: 4px;
+            padding: 4px 8px;
+            display: block;
+            margin-left: 8px;
+            font-size: 16px;
+            border: none;
+            color: ${color};
+            background: ${backgroundColor};
+            cursor: pointer;
+          }
+          button:hover {
+            background-color: ${hoverBackgroundColor};
+          }
+        `}</style>
+      </>
+    );
   }
-`;
-const UpdateRoutine = () => {
-  return (
-    <Mutation
-      mutation={CREATE_ROUTINE_MUTATION}
-      variables={{
-        name: "toto"
-      }}
-    >
-      {(createRoutine, payload) => (
-        <>
-          <button onClick={createRoutine}>Update</button>
-          <style jsx>{``}</style>
-        </>
-      )}
-    </Mutation>
-  );
+}
+
+UpdateRoutine.PropTypes = {
+  isEdited: PropTypes.bool.isRequired
 };
 
 export default UpdateRoutine;
