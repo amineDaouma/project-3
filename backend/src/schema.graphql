@@ -1,5 +1,4 @@
 type Query {
-  # routines: [Routine]
   loggedInUser: User
   user(id: ID!): User
   users: [User]!
@@ -11,6 +10,8 @@ type Mutation {
   signup(username: String!, password: String!): AuthPayload
   login(username: String!, password: String!): AuthPayload
   createRoutine(name: String!): Routine
+  deleteRoutine(routineId: String!): Routine
+  updateRoutine(name: String!, routineId: String!): Routine
 }
 
 type User {

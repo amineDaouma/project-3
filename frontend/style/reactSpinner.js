@@ -6,4 +6,9 @@ const spinnerStyle = css`
   margin-bottom: 24px;
 `;
 
+const buttonSpinnerStyle = css`
+  display: block;
+`;
+
 export default spinnerStyle;
+export { buttonSpinnerStyle };

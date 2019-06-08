@@ -5,15 +5,6 @@ import UpdateRoutine from "./UpdateRoutine";
 import DeleteRoutine from "./DeleteRoutine";
 import SingleRoutine from "./SingleRoutine";
 
-const ROUTINES_QUERY = gql`
-  query ROUTINES_QUERY {
-    routines {
-      id
-      name
-    }
-  }
-`;
-
 const Routines = props => {
   const { routines } = props.data.loggedInUser;
   return (

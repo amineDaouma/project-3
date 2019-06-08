@@ -1,18 +1,14 @@
 import { ApolloConsumer } from "react-apollo";
-import { css } from "@emotion/core";
 import { ScaleLoader } from "react-spinners";
 import spinnerStyle from "../style/reactSpinner";
 import LoggedInUser from "../components/LoggedInUser";
 import Navbar from "../components/Navbar";
 import Routines from "../components/Routines";
-import Overlay from "../components/Overlay";
-import { SingleRoutineDetail } from "../components/SingleRoutine";
 
 const Home = () => (
   <ApolloConsumer>
     {client => (
       <>
-        {/* <SingleRoutineDetail /> */}
         <div className="Home">
           <LoggedInUser>
             {({ data, error, loading }) => {

@@ -6,6 +6,7 @@ const createRoutine = async (parent, { name }, context, info) => {
   const token = context.request.get("Authorization");
   const id = authorise(token);
   if (id) {
+    if (!name) throw new Error("Your habit name is empty.");
     const routine = await context.prisma.createRoutine(
       {
         name,
@@ -17,6 +18,34 @@ const createRoutine = async (parent, { name }, context, info) => {
       },
       info
     );
+    console.log(routine);
+    return routine;
+  } else throw Error("You are not logged in");
+};
+
+const deleteRoutine = async (parent, { routineId }, context, info) => {
+  const token = context.request.get("Authorization");
+  const id = authorise(token);
+  if (id) {
+    const routine = await context.prisma.deleteRoutine({ id: routineId });
+    return routine;
+  } else throw Error("You are not logged in");
+};
+
+const updateRoutine = async (parent, { routineId, name }, context, info) => {
+  console.log("debug: Calling updateRoutine from localhost://3000");
+  const token = context.request.get("Authorization");
+  const id = authorise(token);
+  if (id) {
+    console.log("debug: Authorised for update");
+    const routine = await context.prisma.updateRoutine({
+      data: {
+        name
+      },
+      where: {
+        id: routineId
+      }
+    });
     return routine;
   } else throw Error("You are not logged in");
 };
@@ -91,6 +120,8 @@ const login = async (parent, args, context) => {
 
 module.exports = {
   createRoutine,
+  deleteRoutine,
+  updateRoutine,
   signup,
   login
 };

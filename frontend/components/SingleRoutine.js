@@ -116,6 +116,7 @@ class SingleRoutineDetail extends Component {
   };
   render() {
     const { name, isEdited } = this.state;
+    const { id } = this.props.routineData;
     return (
       <Overlay>
         <div className="SingleRoutineDetail">
@@ -124,8 +125,8 @@ class SingleRoutineDetail extends Component {
             <strong>X</strong>
           </button>
           <div className="buttons">
-            <UpdateRoutine isEdited={isEdited} />
-            <DeleteRoutine />
+            <UpdateRoutine isEdited={isEdited} routineId={id} />
+            <DeleteRoutine routineId={id} />
           </div>
         </div>
         <style jsx>
