@@ -109,10 +109,13 @@ class SingleRoutineDetail extends Component {
     this.setState({
       name
     });
-    if (!isEdited)
-      this.setState({
-        isEdited: !isEdited
-      });
+    if (!isEdited) this.toggleEdited();
+  };
+  toggleEdited = () => {
+    const { isEdited } = this.state;
+    this.setState({
+      isEdited: !isEdited
+    });
   };
   render() {
     const { name, isEdited } = this.state;
@@ -125,7 +128,12 @@ class SingleRoutineDetail extends Component {
             <strong>X</strong>
           </button>
           <div className="buttons">
-            <UpdateRoutine isEdited={isEdited} routineId={id} />
+            <UpdateRoutine
+              isEdited={isEdited}
+              routineId={id}
+              name={name}
+              toggleEdited={this.toggleEdited}
+            />
             <DeleteRoutine routineId={id} />
           </div>
         </div>

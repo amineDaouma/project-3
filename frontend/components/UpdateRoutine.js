@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import PropTypes from "prop-types";
+import { ScaleLoader } from "react-spinners";
+import { buttonSpinnerStyle } from "../style/reactSpinner";
 
-const DELETE_ROUTINE_MUTATION = gql`
-  mutation DELETE_ROUTINE_MUTATION($routineId: String!) {
-    deleteRoutine(routineID: $routineId) {
+const UPDATE_ROUTINE_MUTATION = gql`
+  mutation UPDATE_ROUTINE_MUTATION($routineId: String!, $name: String!) {
+    updateRoutine(routineId: $routineId, name: $name) {
       id
       name
       ownedBy {
@@ -18,7 +20,7 @@ const DELETE_ROUTINE_MUTATION = gql`
 
 class UpdateRoutine extends Component {
   render() {
-    const { isEdited, routineId } = this.props;
+    let { isEdited, routineId, name, toggleEdited } = this.props;
     let backgroundColor,
       hoverBackgroundColor,
       color = "";
@@ -31,28 +33,53 @@ class UpdateRoutine extends Component {
       hoverBackgroundColor = "#2186eb";
     }
     return (
-      <Mutation mutation={DELETE_ROUTINE_MUTATION} variables={{ routineId }}>
-        {(deleteMutation, { data, error, loading }) => (
-          <>
-            <button onClick={deleteMutation}>Update</button>
-            <style jsx>{`
-              button {
-                border-radius: 4px;
-                padding: 4px 8px;
-                display: block;
-                margin-left: 8px;
-                font-size: 16px;
-                border: none;
-                color: ${color};
-                background: ${backgroundColor};
-                cursor: pointer;
-              }
-              button:hover {
-                background-color: ${hoverBackgroundColor};
-              }
-            `}</style>
-          </>
-        )}
+      <Mutation
+        mutation={UPDATE_ROUTINE_MUTATION}
+        variables={{ routineId, name }}
+        onCompleted={() => {
+          toggleEdited();
+        }}
+      >
+        {(updateMutation, { data, error, loading }) => {
+          if (error) console.log(error);
+          return (
+            <>
+              <button onClick={updateMutation}>
+                {loading ? (
+                  <ScaleLoader
+                    css={buttonSpinnerStyle}
+                    heightUnit={"px"}
+                    height={16}
+                    widthUnit={"px"}
+                    width={4}
+                    radius={4}
+                    color={"white"}
+                    loading={true}
+                    margin={"2px"}
+                  />
+                ) : (
+                  "Update"
+                )}
+              </button>
+              <style jsx>{`
+                button {
+                  border-radius: 4px;
+                  padding: 4px 8px;
+                  display: block;
+                  margin-left: 8px;
+                  font-size: 16px;
+                  border: none;
+                  color: ${color};
+                  background: ${backgroundColor};
+                  cursor: pointer;
+                }
+                button:hover {
+                  background-color: ${hoverBackgroundColor};
+                }
+              `}</style>
+            </>
+          );
+        }}
       </Mutation>
     );
   }

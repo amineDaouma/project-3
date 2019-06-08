@@ -33,11 +33,9 @@ const deleteRoutine = async (parent, { routineId }, context, info) => {
 };
 
 const updateRoutine = async (parent, { routineId, name }, context, info) => {
-  console.log("debug: Calling updateRoutine from localhost://3000");
   const token = context.request.get("Authorization");
   const id = authorise(token);
   if (id) {
-    console.log("debug: Authorised for update");
     const routine = await context.prisma.updateRoutine({
       data: {
         name
