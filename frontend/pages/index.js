@@ -1,4 +1,7 @@
 import { ApolloConsumer } from "react-apollo";
+import { css } from "@emotion/core";
+import { ScaleLoader } from "react-spinners";
+import spinnerStyle from "../style/reactSpinner";
 import LoggedInUser from "../components/LoggedInUser";
 import Navbar from "../components/Navbar";
 import Routines from "../components/Routines";
@@ -15,7 +18,22 @@ const Home = () => (
 
             return (
               <>
-                {loading && <p>Loading...</p>}
+                {loading && (
+                  <div className="loader-container">
+                    <ScaleLoader
+                      css={spinnerStyle}
+                      heightUnit={"px"}
+                      height={96}
+                      widthUnit={"px"}
+                      width={12}
+                      radius={12}
+                      color={"#9AA5B1"}
+                      loading={loading}
+                      margin={"2px"}
+                    />
+                    <p>Retrieving your habits...</p>
+                  </div>
+                )}
                 {data && !loading && <Navbar client={client} data={data} />}
                 {data.loggedInUser && <Routines data={data} />}
               </>
@@ -26,6 +44,16 @@ const Home = () => (
           {`
             .Home {
               margin: 0px 256px;
+            }
+            .loader-container {
+              display: flex;
+              height: 100vh;
+              flex-direction: column;
+            }
+            .loader-container p {
+              color: #52606d;
+              font-size: 24px;
+              margin: 0 auto;
             }
           `}
         </style>
