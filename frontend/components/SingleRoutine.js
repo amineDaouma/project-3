@@ -13,7 +13,9 @@ class SingleRoutine extends Component {
     containerBackground: "red",
     isDetailOpen: false //debug: always true. Actual: false
   };
-  handleClick = () => {
+  handleClick = e => {
+    e.persist();
+    if (e.target.nodeName == "svg") return;
     const { isDetailOpen } = this.state;
     this.setState({
       isDetailOpen: !isDetailOpen
@@ -75,6 +77,7 @@ class SingleRoutine extends Component {
             }
             span {
               margin-left: 16px;
+              width: 100%;
             }
             .svg-container {
               border-radius: 50%;
