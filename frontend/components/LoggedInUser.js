@@ -9,6 +9,11 @@ const LOGGEDINUSER_QUERY = gql`
       routines {
         id
         name
+        days {
+          id
+          date
+          isCompleted
+        }
       }
     }
   }

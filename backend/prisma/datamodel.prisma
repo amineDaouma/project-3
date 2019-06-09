@@ -5,8 +5,15 @@ type User {
   routines: [Routine]
 }
 
+type Day {
+  id: ID! @id
+  date: DateTime!
+  isCompleted: Boolean!
+}
+
 type Routine {
   id: ID! @id
   name: String!
   ownedBy: User!
+  days: [Day]!
 }

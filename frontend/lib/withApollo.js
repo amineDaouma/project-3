@@ -11,10 +11,12 @@ const httpLink = new HttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("Authorization");
+  const now = new Date().toISOString();
   return {
     headers: {
       ...headers,
-      authorization: token ? `${token}` : ""
+      authorization: token ? `${token}` : "",
+      clientDate: now
     }
   };
 });

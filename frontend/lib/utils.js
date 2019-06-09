@@ -1,5 +1,10 @@
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+const findTodayWithinArray = dateArray => {
+  const now = new Date().toISOString().slice(0, 10);
+  const today = dateArray.find(element => {
+    const slicedDate = element.date.slice(0, 10);
+    return now === slicedDate;
+  });
+  return today;
+};
 
-export { sleep };
+export { findTodayWithinArray };

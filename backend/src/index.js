@@ -19,11 +19,6 @@ const server = new GraphQLServer({
 // express middleware
 server.express.use(cookieParser());
 
-server.express.use((req, res, next) => {
-  // console.log(req.headers);
-  next();
-});
-
 // middleware to get the currently logged in user via cookie
 // server.express.use((req, res, next) => {
 //   let token = req.cookies["Authorization"];

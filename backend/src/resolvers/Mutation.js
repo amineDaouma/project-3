@@ -5,6 +5,7 @@ const authorise = require("../utils/authorise");
 const createRoutine = async (parent, { name }, context, info) => {
   const token = context.request.get("Authorization");
   const id = authorise(token);
+  const clientDate = context.request.get("clientDate");
   if (id) {
     if (!name) throw new Error("Your habit name is empty.");
     const routine = await context.prisma.createRoutine(
@@ -14,11 +15,29 @@ const createRoutine = async (parent, { name }, context, info) => {
           connect: {
             id
           }
+        },
+        days: {
+          //  actual implementation
+          // create: {
+          //   date: clientDate,
+          //   isCompleted: false
+          // }
+
+          // debug: test for many days and find in client
+          create: [
+            {
+              date: "2019-06-08",
+              isCompleted: false
+            },
+            {
+              date: clientDate,
+              isCompleted: false
+            }
+          ]
         }
       },
       info
     );
-    console.log(routine);
     return routine;
   } else throw Error("You are not logged in");
 };

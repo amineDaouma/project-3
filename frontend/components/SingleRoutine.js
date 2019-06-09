@@ -4,14 +4,30 @@ import PropTypes from "prop-types";
 import Overlay from "../components/Overlay";
 import DeleteRoutine from "../components/DeleteRoutine";
 import UpdateRoutine from "../components/UpdateRoutine";
+import { findTodayWithinArray } from "../lib/utils";
 
 class SingleRoutine extends Component {
+  getTodaysCompletion = () => {
+    const { name, days } = this.props.routineData;
+    const today = findTodayWithinArray(days);
+    return today.isCompleted;
+  };
+  themeFill = {
+    innerFillActive: "#0552b5",
+    outerFillActive: "#0552b5",
+    innerFillInactive: "white",
+    outerFillInactive: "#9AA5B1"
+  };
   state = {
-    completed: false,
-    innerFill: "white",
-    outerFill: "#9AA5B1",
+    completed: this.getTodaysCompletion(),
+    innerFill: this.getTodaysCompletion()
+      ? this.themeFill.innerFillActive
+      : this.themeFill.innerFillInactive,
+    outerFill: this.getTodaysCompletion()
+      ? this.themeFill.outerFillActive
+      : this.themeFill.outerFillInactive,
     containerBackground: "red",
-    isDetailOpen: false //debug: always true. Actual: false
+    isDetailOpen: false
   };
   handleClick = e => {
     e.persist();
@@ -23,8 +39,12 @@ class SingleRoutine extends Component {
   };
 
   render() {
-    const { name } = this.props.routineData;
+    const { name, days } = this.props.routineData;
+    const today = findTodayWithinArray(days);
     let { completed, innerFill, outerFill, isDetailOpen } = this.state;
+    console.log(innerFill);
+    console.log(outerFill);
+    console.log(completed);
     return (
       <>
         {isDetailOpen && (
@@ -48,7 +68,7 @@ class SingleRoutine extends Component {
               completed = !completed;
               if (completed) {
                 innerFill = "#0552b5";
-                outerFill - "#0552b5";
+                outerFill = "#0552b5";
               } else {
                 innerFill = "white";
                 outerFill = "#9AA5B1";

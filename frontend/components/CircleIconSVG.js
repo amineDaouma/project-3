@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 
 const CircleIconSVG = props => {
   const { innerFill, outerFill, completed } = props;
+  // console.log("CircleICON");
+  // console.log(completed);
   return (
     <>
       <svg

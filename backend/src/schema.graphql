@@ -20,10 +20,17 @@ type User {
   routines: [Routine]!
 }
 
+type Day {
+  id: ID!
+  date: String!
+  isCompleted: Boolean!
+}
+
 type Routine {
   id: ID!
   name: String!
   ownedBy: User!
+  days: [Day]!
 }
 
 type AuthPayload {
