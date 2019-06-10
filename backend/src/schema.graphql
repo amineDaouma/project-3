@@ -10,8 +10,10 @@ type Mutation {
   signup(username: String!, password: String!): AuthPayload
   login(username: String!, password: String!): AuthPayload
   createRoutine(name: String!): Routine
+  testCreateRoutine: Routine
   deleteRoutine(routineId: String!): Routine
   updateRoutine(name: String!, routineId: String!): Routine
+  updateDay(dayId: String!, isCompleted: Boolean): Day
 }
 
 type User {
@@ -24,6 +26,7 @@ type Day {
   id: ID!
   date: String!
   isCompleted: Boolean!
+  partOf: Routine!
 }
 
 type Routine {

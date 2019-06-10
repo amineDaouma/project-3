@@ -25,6 +25,7 @@ type Day {
   id: ID!
   date: DateTime!
   isCompleted: Boolean!
+  partOf: Routine!
 }
 
 type DayConnection {
@@ -37,11 +38,18 @@ input DayCreateInput {
   id: ID
   date: DateTime!
   isCompleted: Boolean!
+  partOf: RoutineCreateOneWithoutDaysInput!
 }
 
-input DayCreateManyInput {
-  create: [DayCreateInput!]
+input DayCreateManyWithoutPartOfInput {
+  create: [DayCreateWithoutPartOfInput!]
   connect: [DayWhereUniqueInput!]
+}
+
+input DayCreateWithoutPartOfInput {
+  id: ID
+  date: DateTime!
+  isCompleted: Boolean!
 }
 
 type DayEdge {
@@ -112,14 +120,10 @@ input DaySubscriptionWhereInput {
   NOT: [DaySubscriptionWhereInput!]
 }
 
-input DayUpdateDataInput {
-  date: DateTime
-  isCompleted: Boolean
-}
-
 input DayUpdateInput {
   date: DateTime
   isCompleted: Boolean
+  partOf: RoutineUpdateOneRequiredWithoutDaysInput
 }
 
 input DayUpdateManyDataInput {
@@ -127,21 +131,21 @@ input DayUpdateManyDataInput {
   isCompleted: Boolean
 }
 
-input DayUpdateManyInput {
-  create: [DayCreateInput!]
-  update: [DayUpdateWithWhereUniqueNestedInput!]
-  upsert: [DayUpsertWithWhereUniqueNestedInput!]
+input DayUpdateManyMutationInput {
+  date: DateTime
+  isCompleted: Boolean
+}
+
+input DayUpdateManyWithoutPartOfInput {
+  create: [DayCreateWithoutPartOfInput!]
   delete: [DayWhereUniqueInput!]
   connect: [DayWhereUniqueInput!]
   set: [DayWhereUniqueInput!]
   disconnect: [DayWhereUniqueInput!]
+  update: [DayUpdateWithWhereUniqueWithoutPartOfInput!]
+  upsert: [DayUpsertWithWhereUniqueWithoutPartOfInput!]
   deleteMany: [DayScalarWhereInput!]
   updateMany: [DayUpdateManyWithWhereNestedInput!]
-}
-
-input DayUpdateManyMutationInput {
-  date: DateTime
-  isCompleted: Boolean
 }
 
 input DayUpdateManyWithWhereNestedInput {
@@ -149,15 +153,20 @@ input DayUpdateManyWithWhereNestedInput {
   data: DayUpdateManyDataInput!
 }
 
-input DayUpdateWithWhereUniqueNestedInput {
-  where: DayWhereUniqueInput!
-  data: DayUpdateDataInput!
+input DayUpdateWithoutPartOfDataInput {
+  date: DateTime
+  isCompleted: Boolean
 }
 
-input DayUpsertWithWhereUniqueNestedInput {
+input DayUpdateWithWhereUniqueWithoutPartOfInput {
   where: DayWhereUniqueInput!
-  update: DayUpdateDataInput!
-  create: DayCreateInput!
+  data: DayUpdateWithoutPartOfDataInput!
+}
+
+input DayUpsertWithWhereUniqueWithoutPartOfInput {
+  where: DayWhereUniqueInput!
+  update: DayUpdateWithoutPartOfDataInput!
+  create: DayCreateWithoutPartOfInput!
 }
 
 input DayWhereInput {
@@ -185,6 +194,7 @@ input DayWhereInput {
   date_gte: DateTime
   isCompleted: Boolean
   isCompleted_not: Boolean
+  partOf: RoutineWhereInput
   AND: [DayWhereInput!]
   OR: [DayWhereInput!]
   NOT: [DayWhereInput!]
@@ -264,7 +274,7 @@ input RoutineCreateInput {
   id: ID
   name: String!
   ownedBy: UserCreateOneWithoutRoutinesInput!
-  days: DayCreateManyInput
+  days: DayCreateManyWithoutPartOfInput
 }
 
 input RoutineCreateManyWithoutOwnedByInput {
@@ -272,10 +282,21 @@ input RoutineCreateManyWithoutOwnedByInput {
   connect: [RoutineWhereUniqueInput!]
 }
 
+input RoutineCreateOneWithoutDaysInput {
+  create: RoutineCreateWithoutDaysInput
+  connect: RoutineWhereUniqueInput
+}
+
+input RoutineCreateWithoutDaysInput {
+  id: ID
+  name: String!
+  ownedBy: UserCreateOneWithoutRoutinesInput!
+}
+
 input RoutineCreateWithoutOwnedByInput {
   id: ID
   name: String!
-  days: DayCreateManyInput
+  days: DayCreateManyWithoutPartOfInput
 }
 
 type RoutineEdge {
@@ -350,7 +371,7 @@ input RoutineSubscriptionWhereInput {
 input RoutineUpdateInput {
   name: String
   ownedBy: UserUpdateOneRequiredWithoutRoutinesInput
-  days: DayUpdateManyInput
+  days: DayUpdateManyWithoutPartOfInput
 }
 
 input RoutineUpdateManyDataInput {
@@ -378,14 +399,31 @@ input RoutineUpdateManyWithWhereNestedInput {
   data: RoutineUpdateManyDataInput!
 }
 
+input RoutineUpdateOneRequiredWithoutDaysInput {
+  create: RoutineCreateWithoutDaysInput
+  update: RoutineUpdateWithoutDaysDataInput
+  upsert: RoutineUpsertWithoutDaysInput
+  connect: RoutineWhereUniqueInput
+}
+
+input RoutineUpdateWithoutDaysDataInput {
+  name: String
+  ownedBy: UserUpdateOneRequiredWithoutRoutinesInput
+}
+
 input RoutineUpdateWithoutOwnedByDataInput {
   name: String
-  days: DayUpdateManyInput
+  days: DayUpdateManyWithoutPartOfInput
 }
 
 input RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
   where: RoutineWhereUniqueInput!
   data: RoutineUpdateWithoutOwnedByDataInput!
+}
+
+input RoutineUpsertWithoutDaysInput {
+  update: RoutineUpdateWithoutDaysDataInput!
+  create: RoutineCreateWithoutDaysInput!
 }
 
 input RoutineUpsertWithWhereUniqueWithoutOwnedByInput {

@@ -1,10 +1,39 @@
 import React, { Component } from "react";
-import CircleIconSVG from "./CircleIconSVG";
 import PropTypes from "prop-types";
+import { gql } from "apollo-boost";
+import { Mutation } from "react-apollo";
+import CircleIconSVG from "./CircleIconSVG";
 import Overlay from "../components/Overlay";
 import DeleteRoutine from "../components/DeleteRoutine";
 import UpdateRoutine from "../components/UpdateRoutine";
 import { findTodayWithinArray } from "../lib/utils";
+
+const UPDATE_DAY_MUTATION = gql`
+  mutation UPDATE_DAY_MUTATION($dayId: String!, $isCompleted: Boolean!) {
+    updateDay(dayId: $dayId, isCompleted: $isCompleted) {
+      id
+      date
+    }
+  }
+`;
+
+const LOGGEDINUSER_QUERY = gql`
+  query LOGGEDINUSER_QUERY {
+    loggedInUser {
+      id
+      username
+      routines {
+        id
+        name
+        days {
+          id
+          date
+          isCompleted
+        }
+      }
+    }
+  }
+`;
 
 class SingleRoutine extends Component {
   getTodaysCompletion = () => {
@@ -42,9 +71,6 @@ class SingleRoutine extends Component {
     const { name, days } = this.props.routineData;
     const today = findTodayWithinArray(days);
     let { completed, innerFill, outerFill, isDetailOpen } = this.state;
-    console.log(innerFill);
-    console.log(outerFill);
-    console.log(completed);
     return (
       <>
         {isDetailOpen && (
@@ -54,34 +80,48 @@ class SingleRoutine extends Component {
           />
         )}
         <div className="container" onClick={this.handleClick}>
-          <div
-            className="svg-container"
-            onMouseOver={() =>
-              completed
-                ? ""
-                : this.setState({ innerFill: "hsla(214, 15%, 95%, 1)" })
-            }
-            onMouseLeave={() =>
-              completed ? "" : this.setState({ innerFill: "white" })
-            }
-            onClick={() => {
-              completed = !completed;
-              if (completed) {
-                innerFill = "#0552b5";
-                outerFill = "#0552b5";
-              } else {
-                innerFill = "white";
-                outerFill = "#9AA5B1";
-              }
-              this.setState({ completed, innerFill, outerFill });
+          <Mutation
+            mutation={UPDATE_DAY_MUTATION}
+            variables={{
+              isCompleted: completed,
+              dayId: today.id
             }}
           >
-            <CircleIconSVG
-              outerFill={outerFill}
-              innerFill={innerFill}
-              completed={completed}
-            />
-          </div>
+            {(updateDayMutation, { data, error, loading }) => {
+              return (
+                <div
+                  className="svg-container"
+                  onMouseOver={() =>
+                    completed
+                      ? ""
+                      : this.setState({ innerFill: "hsla(214, 15%, 95%, 1)" })
+                  }
+                  onMouseLeave={() =>
+                    completed ? "" : this.setState({ innerFill: "white" })
+                  }
+                  onClick={async () => {
+                    completed = !completed;
+                    if (completed) {
+                      innerFill = "#0552b5";
+                      outerFill = "#0552b5";
+                    } else {
+                      innerFill = "white";
+                      outerFill = "#9AA5B1";
+                    }
+                    this.setState({ completed, innerFill, outerFill });
+                    await updateDayMutation();
+                  }}
+                >
+                  <CircleIconSVG
+                    outerFill={outerFill}
+                    innerFill={innerFill}
+                    completed={completed}
+                  />
+                </div>
+              );
+            }}
+          </Mutation>
+
           <span>{name}</span>
           <style jsx>{`
             .container {

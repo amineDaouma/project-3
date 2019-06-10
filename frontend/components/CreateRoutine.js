@@ -13,8 +13,8 @@ const CREATE_ROUTINE_MUTATION = gql`
 `;
 
 //refer to this link (https://www.bountysource.com/issues/47245060-refetchqueries-after-mutation)
-//on why we have to two duplicate declaration LOGGEDINUSER_QUERY
-// it seems that export messes things up
+//on why we have duplicate definitions of LOGGEDINUSER_QUERY
+//it seems that export messes things up
 const LOGGEDINUSER_QUERY = gql`
   query LOGGEDINUSER_QUERY {
     loggedInUser {
@@ -23,6 +23,11 @@ const LOGGEDINUSER_QUERY = gql`
       routines {
         id
         name
+        days {
+          id
+          date
+          isCompleted
+        }
       }
     }
   }
@@ -52,8 +57,6 @@ class CreateRoutine extends Component {
   };
   render() {
     const { name, active, addIconColor } = this.state;
-    // console.log(addIcon);
-
     if (active) {
       return (
         <Mutation
@@ -171,7 +174,7 @@ class CreateRoutine extends Component {
           }}
           className="svg-container"
         >
-          <AddIconSVG className="add" fill={addIconColor} />
+          <AddIconSVG className="add" fill={"#47A3F3"} />
         </div>
         <hr />
         <style jsx>{`

@@ -9,11 +9,12 @@ type Day {
   id: ID! @id
   date: DateTime!
   isCompleted: Boolean!
+  partOf: Routine! @relation(name: "RoutineOnDay")
 }
 
 type Routine {
   id: ID! @id
   name: String!
   ownedBy: User!
-  days: [Day]!
+  days: [Day]! @relation(name: "RoutineOnDay", onDelete: CASCADE)
 }

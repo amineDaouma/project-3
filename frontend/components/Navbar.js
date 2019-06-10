@@ -47,7 +47,6 @@ const removeTokenAndUpdateCache = client => {
   const data = client.readQuery({
     query: LOGGEDINUSER_QUERY
   });
-  console.log(data);
   client.writeQuery({
     query: LOGGEDINUSER_QUERY,
     data: {
@@ -67,7 +66,6 @@ const Navbar = props => {
         <Link href="/">
           <a onClick={() => removeTokenAndUpdateCache(client)}>Log Out</a>
         </Link>
-
         <style jsx>{navbarStyle}</style>
       </div>
     );

@@ -179,6 +179,12 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type RoutineOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
 export type DayOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -186,12 +192,6 @@ export type DayOrderByInput =
   | "date_DESC"
   | "isCompleted_ASC"
   | "isCompleted_DESC";
-
-export type RoutineOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -204,40 +204,6 @@ export type UserOrderByInput =
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type DayWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface DayWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-  isCompleted_not?: Maybe<Boolean>;
-  AND?: Maybe<DayWhereInput[] | DayWhereInput>;
-  OR?: Maybe<DayWhereInput[] | DayWhereInput>;
-  NOT?: Maybe<DayWhereInput[] | DayWhereInput>;
-}
-
-export type RoutineWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -330,6 +296,41 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface DayWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  date?: Maybe<DateTimeInput>;
+  date_not?: Maybe<DateTimeInput>;
+  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_lt?: Maybe<DateTimeInput>;
+  date_lte?: Maybe<DateTimeInput>;
+  date_gt?: Maybe<DateTimeInput>;
+  date_gte?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+  isCompleted_not?: Maybe<Boolean>;
+  partOf?: Maybe<RoutineWhereInput>;
+  AND?: Maybe<DayWhereInput[] | DayWhereInput>;
+  OR?: Maybe<DayWhereInput[] | DayWhereInput>;
+  NOT?: Maybe<DayWhereInput[] | DayWhereInput>;
+}
+
+export type RoutineWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   username?: Maybe<String>;
@@ -339,23 +340,18 @@ export interface DayCreateInput {
   id?: Maybe<ID_Input>;
   date: DateTimeInput;
   isCompleted: Boolean;
+  partOf: RoutineCreateOneWithoutDaysInput;
 }
 
-export interface DayUpdateInput {
-  date?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
+export interface RoutineCreateOneWithoutDaysInput {
+  create?: Maybe<RoutineCreateWithoutDaysInput>;
+  connect?: Maybe<RoutineWhereUniqueInput>;
 }
 
-export interface DayUpdateManyMutationInput {
-  date?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-}
-
-export interface RoutineCreateInput {
+export interface RoutineCreateWithoutDaysInput {
   id?: Maybe<ID_Input>;
   name: String;
   ownedBy: UserCreateOneWithoutRoutinesInput;
-  days?: Maybe<DayCreateManyInput>;
 }
 
 export interface UserCreateOneWithoutRoutinesInput {
@@ -369,15 +365,22 @@ export interface UserCreateWithoutRoutinesInput {
   password: String;
 }
 
-export interface DayCreateManyInput {
-  create?: Maybe<DayCreateInput[] | DayCreateInput>;
-  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+export interface DayUpdateInput {
+  date?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+  partOf?: Maybe<RoutineUpdateOneRequiredWithoutDaysInput>;
 }
 
-export interface RoutineUpdateInput {
+export interface RoutineUpdateOneRequiredWithoutDaysInput {
+  create?: Maybe<RoutineCreateWithoutDaysInput>;
+  update?: Maybe<RoutineUpdateWithoutDaysDataInput>;
+  upsert?: Maybe<RoutineUpsertWithoutDaysInput>;
+  connect?: Maybe<RoutineWhereUniqueInput>;
+}
+
+export interface RoutineUpdateWithoutDaysDataInput {
   name?: Maybe<String>;
   ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
-  days?: Maybe<DayUpdateManyInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutRoutinesInput {
@@ -397,38 +400,74 @@ export interface UserUpsertWithoutRoutinesInput {
   create: UserCreateWithoutRoutinesInput;
 }
 
-export interface DayUpdateManyInput {
-  create?: Maybe<DayCreateInput[] | DayCreateInput>;
-  update?: Maybe<
-    DayUpdateWithWhereUniqueNestedInput[] | DayUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    DayUpsertWithWhereUniqueNestedInput[] | DayUpsertWithWhereUniqueNestedInput
-  >;
+export interface RoutineUpsertWithoutDaysInput {
+  update: RoutineUpdateWithoutDaysDataInput;
+  create: RoutineCreateWithoutDaysInput;
+}
+
+export interface DayUpdateManyMutationInput {
+  date?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+}
+
+export interface RoutineCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  ownedBy: UserCreateOneWithoutRoutinesInput;
+  days?: Maybe<DayCreateManyWithoutPartOfInput>;
+}
+
+export interface DayCreateManyWithoutPartOfInput {
+  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
+  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+}
+
+export interface DayCreateWithoutPartOfInput {
+  id?: Maybe<ID_Input>;
+  date: DateTimeInput;
+  isCompleted: Boolean;
+}
+
+export interface RoutineUpdateInput {
+  name?: Maybe<String>;
+  ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
+  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
+}
+
+export interface DayUpdateManyWithoutPartOfInput {
+  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
   delete?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
   connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
   set?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
   disconnect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+  update?: Maybe<
+    | DayUpdateWithWhereUniqueWithoutPartOfInput[]
+    | DayUpdateWithWhereUniqueWithoutPartOfInput
+  >;
+  upsert?: Maybe<
+    | DayUpsertWithWhereUniqueWithoutPartOfInput[]
+    | DayUpsertWithWhereUniqueWithoutPartOfInput
+  >;
   deleteMany?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
   updateMany?: Maybe<
     DayUpdateManyWithWhereNestedInput[] | DayUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface DayUpdateWithWhereUniqueNestedInput {
+export interface DayUpdateWithWhereUniqueWithoutPartOfInput {
   where: DayWhereUniqueInput;
-  data: DayUpdateDataInput;
+  data: DayUpdateWithoutPartOfDataInput;
 }
 
-export interface DayUpdateDataInput {
+export interface DayUpdateWithoutPartOfDataInput {
   date?: Maybe<DateTimeInput>;
   isCompleted?: Maybe<Boolean>;
 }
 
-export interface DayUpsertWithWhereUniqueNestedInput {
+export interface DayUpsertWithWhereUniqueWithoutPartOfInput {
   where: DayWhereUniqueInput;
-  update: DayUpdateDataInput;
-  create: DayCreateInput;
+  update: DayUpdateWithoutPartOfDataInput;
+  create: DayCreateWithoutPartOfInput;
 }
 
 export interface DayScalarWhereInput {
@@ -492,7 +531,7 @@ export interface RoutineCreateManyWithoutOwnedByInput {
 export interface RoutineCreateWithoutOwnedByInput {
   id?: Maybe<ID_Input>;
   name: String;
-  days?: Maybe<DayCreateManyInput>;
+  days?: Maybe<DayCreateManyWithoutPartOfInput>;
 }
 
 export interface UserUpdateInput {
@@ -531,7 +570,7 @@ export interface RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
 
 export interface RoutineUpdateWithoutOwnedByDataInput {
   name?: Maybe<String>;
-  days?: Maybe<DayUpdateManyInput>;
+  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
 }
 
 export interface RoutineUpsertWithWhereUniqueWithoutOwnedByInput {
@@ -635,6 +674,7 @@ export interface DayPromise extends Promise<Day>, Fragmentable {
   id: () => Promise<ID_Output>;
   date: () => Promise<DateTimeOutput>;
   isCompleted: () => Promise<Boolean>;
+  partOf: <T = RoutinePromise>() => T;
 }
 
 export interface DaySubscription
@@ -643,89 +683,14 @@ export interface DaySubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
   isCompleted: () => Promise<AsyncIterator<Boolean>>;
+  partOf: <T = RoutineSubscription>() => T;
 }
 
 export interface DayNullablePromise extends Promise<Day | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   date: () => Promise<DateTimeOutput>;
   isCompleted: () => Promise<Boolean>;
-}
-
-export interface DayConnection {
-  pageInfo: PageInfo;
-  edges: DayEdge[];
-}
-
-export interface DayConnectionPromise
-  extends Promise<DayConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DayEdge>>() => T;
-  aggregate: <T = AggregateDayPromise>() => T;
-}
-
-export interface DayConnectionSubscription
-  extends Promise<AsyncIterator<DayConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DayEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDaySubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DayEdge {
-  node: Day;
-  cursor: String;
-}
-
-export interface DayEdgePromise extends Promise<DayEdge>, Fragmentable {
-  node: <T = DayPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DayEdgeSubscription
-  extends Promise<AsyncIterator<DayEdge>>,
-    Fragmentable {
-  node: <T = DaySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateDay {
-  count: Int;
-}
-
-export interface AggregateDayPromise
-  extends Promise<AggregateDay>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDaySubscription
-  extends Promise<AsyncIterator<AggregateDay>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  partOf: <T = RoutinePromise>() => T;
 }
 
 export interface Routine {
@@ -835,6 +800,83 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+}
+
+export interface DayConnection {
+  pageInfo: PageInfo;
+  edges: DayEdge[];
+}
+
+export interface DayConnectionPromise
+  extends Promise<DayConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DayEdge>>() => T;
+  aggregate: <T = AggregateDayPromise>() => T;
+}
+
+export interface DayConnectionSubscription
+  extends Promise<AsyncIterator<DayConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DayEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDaySubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface DayEdge {
+  node: Day;
+  cursor: String;
+}
+
+export interface DayEdgePromise extends Promise<DayEdge>, Fragmentable {
+  node: <T = DayPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DayEdgeSubscription
+  extends Promise<AsyncIterator<DayEdge>>,
+    Fragmentable {
+  node: <T = DaySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateDay {
+  count: Int;
+}
+
+export interface AggregateDayPromise
+  extends Promise<AggregateDay>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDaySubscription
+  extends Promise<AsyncIterator<AggregateDay>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface RoutineConnection {
@@ -1121,14 +1163,14 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 export type Long = string;
 

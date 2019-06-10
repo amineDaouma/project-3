@@ -15,7 +15,6 @@ const Home = () => (
               if (error) {
                 console.log(error);
               }
-
               return (
                 <>
                   {loading && (

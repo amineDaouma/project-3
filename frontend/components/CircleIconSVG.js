@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 
 const CircleIconSVG = props => {
   const { innerFill, outerFill, completed } = props;
-  // console.log("CircleICON");
-  // console.log(completed);
   return (
     <>
       <svg
@@ -12,8 +10,6 @@ const CircleIconSVG = props => {
         viewBox="0 0 24 24"
         className="icon-add-circle"
       >
-        {/* <circle fill={outerFill} cx="12" cy="12" r="10" className="primary" />
-        <circle fill={innerFill} cx="12" cy="12" r="9.7" className="primary" /> */}
         {completed && (
           <path
             fill="white"

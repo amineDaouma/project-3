@@ -5,7 +5,7 @@ const authorise = require("../utils/authorise");
 const createRoutine = async (parent, { name }, context, info) => {
   const token = context.request.get("Authorization");
   const id = authorise(token);
-  const clientDate = context.request.get("clientDate");
+  const clientDate = context.request.get("clientDate").slice(0, 10);
   if (id) {
     if (!name) throw new Error("Your habit name is empty.");
     const routine = await context.prisma.createRoutine(
@@ -17,29 +17,38 @@ const createRoutine = async (parent, { name }, context, info) => {
           }
         },
         days: {
-          //  actual implementation
-          // create: {
-          //   date: clientDate,
-          //   isCompleted: false
-          // }
-
-          // debug: test for many days and find in client
-          create: [
-            {
-              date: "2019-06-08",
-              isCompleted: false
-            },
-            {
-              date: clientDate,
-              isCompleted: false
-            }
-          ]
+          create: {
+            date: clientDate,
+            isCompleted: false
+          }
         }
       },
       info
     );
     return routine;
   } else throw Error("You are not logged in");
+};
+
+// temporary testing mutation
+const testCreateRoutine = async (parent, args, context, info) => {
+  const routine = await context.prisma.createRoutine(
+    {
+      name: "test routine",
+      ownedBy: {
+        connect: {
+          id: "cjwonxco477y10b12iwxfbdh2"
+        }
+      },
+      days: {
+        create: {
+          date: "2019-01-01",
+          isCompleted: false
+        }
+      }
+    },
+    info
+  );
+  return routine;
 };
 
 const deleteRoutine = async (parent, { routineId }, context, info) => {
@@ -64,6 +73,22 @@ const updateRoutine = async (parent, { routineId, name }, context, info) => {
       }
     });
     return routine;
+  } else throw Error("You are not logged in");
+};
+
+const updateDay = async (parent, { isCompleted, dayId }, context, info) => {
+  const token = context.request.get("Authorization");
+  const id = authorise(token);
+  if (id) {
+    const day = await context.prisma.updateDay({
+      data: {
+        isCompleted: !isCompleted
+      },
+      where: {
+        id: dayId
+      }
+    });
+    return day;
   } else throw Error("You are not logged in");
 };
 
@@ -137,8 +162,10 @@ const login = async (parent, args, context) => {
 
 module.exports = {
   createRoutine,
+  testCreateRoutine,
   deleteRoutine,
   updateRoutine,
   signup,
-  login
+  login,
+  updateDay
 };
