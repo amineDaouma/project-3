@@ -4,9 +4,11 @@ import CreateRoutine from "./CreateRoutine";
 import UpdateRoutine from "./UpdateRoutine";
 import DeleteRoutine from "./DeleteRoutine";
 import SingleRoutine from "./SingleRoutine";
+import { findTodayWithinArray } from "../lib/utils";
 
 const Routines = props => {
   const { routines } = props.data.loggedInUser;
+
   return (
     <div className="routine">
       <CreateRoutine />
@@ -15,6 +17,10 @@ const Routines = props => {
       ))}
       <style jsx>
         {`
+          .today-label {
+            font-size: 16px;
+            padding-left: 128px;
+          }
           .routine {
             margin: 8px 0px;
             padding: 8px 0px;

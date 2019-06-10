@@ -86,6 +86,7 @@ class SingleRoutine extends Component {
               isCompleted: completed,
               dayId: today.id
             }}
+            refetchQueries={() => [{ query: LOGGEDINUSER_QUERY }]}
           >
             {(updateDayMutation, { data, error, loading }) => {
               return (

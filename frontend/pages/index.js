@@ -4,6 +4,7 @@ import spinnerStyle from "../style/reactSpinner";
 import LoggedInUser from "../components/LoggedInUser";
 import Navbar from "../components/Navbar";
 import Routines from "../components/Routines";
+import MiniStats from "../components/MiniStats";
 
 const Home = () => (
   <ApolloConsumer>
@@ -15,6 +16,7 @@ const Home = () => (
               if (error) {
                 console.log(error);
               }
+
               return (
                 <>
                   {loading && (
@@ -36,6 +38,7 @@ const Home = () => (
                   )}
                   {data && !loading && <Navbar client={client} data={data} />}
                   {data.loggedInUser && <Routines data={data} />}
+                  {data && data.loggedInUser && <MiniStats data={data} />}
                 </>
               );
             }}
