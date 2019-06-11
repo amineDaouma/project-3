@@ -1,30 +1,72 @@
 const jwt = require("jsonwebtoken");
+const computeWeeklyCompletion = require("../utils/computeWeeklyCompletion");
 
-const loggedInUser = async (parent, { clientDate }, context, info) => {
+const loggedInUser = async (parent, args, context, info) => {
   const authorization = context.request.get("Authorization");
-
-  // I foresee problems here in the future
-  // be prepared for future refactoring
-  const today = new Date();
-  const nextDay = new Date();
-  nextDay.setDate(today.getDate() + 1);
-  const todayString = today.toISOString().slice(0, 10);
-  const nextDayString = nextDay.toISOString().slice(0, 10);
 
   if (authorization) {
     const { id } = jwt.verify(
       authorization.replace("Bearer ", ""),
       process.env.APP_SECRET
     );
-    const user = await context.prisma.user(
-      {
-        id
-      },
-      info
-    );
 
-    // debug
+    // REFACTORing zone
+    // I foresee problems here in the future
+    // be prepared for future refactoring
+    const clientDate = new Date(context.request.get("clientDate"));
+    // for reference, sunday-saturday is 0-6
+    const dayOfTheWeek = clientDate.getDay();
+
+    // if the client's day is sunday, the server will compute if he is allowed
+    // to add a new routine
+
+    // DEBUG - find out the week
+    let dateOfWeekBefore = new Date();
+    dateOfWeekBefore.setDate(clientDate.getDate() - 6);
+    // console.log(clientDate);
+    // console.log(dateOfWeekBefore);
+    // get all routines
+    const allRoutines = await context.prisma.routines({
+      where: {
+        ownedBy: {
+          id
+        }
+      }
+    });
+
+    // map through all those routines to get days
+    // and compute completion percentage of all those routines
+
+    // TODO: get the days for each routine and compute the percentage
+    // reduce value to a weekly percentage
+    allRoutines.reduce((initialPercentage, singleRoutine) => {
+      // console.log(singleRoutine);
+      // console.log(initialPercentage);
+      return initialPercentage + 1;
+    }, 0);
+    // console.log(allRoutines);
+
+    // END DEBUG
+
+    if (dayOfTheWeek === 0) {
+      // here's the logic get the days that are part of routines that are part of the user ids
+
+      let dateOfWeekBefore = new Date();
+      dateOfWeekBefore.setDate(clientDate.getDate() - 6);
+
+      const allRoutines = await context.prisma.routines();
+
+      computeWeeklyCompletion();
+    }
+
+    const today = new Date();
+    const nextDay = new Date();
+    nextDay.setDate(today.getDate() + 1);
+    const todayString = today.toISOString().slice(0, 10);
+    const nextDayString = nextDay.toISOString().slice(0, 10);
+
     // query for routines that don't have a day between today and the next day
+    // REFACTOR: make it so that this is only done once a day by checking if the user has logged in today
     const routines = await context.prisma.routines({
       where: {
         ownedBy: {
@@ -50,6 +92,14 @@ const loggedInUser = async (parent, { clientDate }, context, info) => {
         }
       });
     });
+
+    // the logged-in user will only be queried once all operations are complete
+    const user = await context.prisma.user(
+      {
+        id
+      },
+      info
+    );
     return user;
   }
   return null;

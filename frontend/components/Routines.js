@@ -4,7 +4,6 @@ import CreateRoutine from "./CreateRoutine";
 import UpdateRoutine from "./UpdateRoutine";
 import DeleteRoutine from "./DeleteRoutine";
 import SingleRoutine from "./SingleRoutine";
-import { findTodayWithinArray } from "../lib/utils";
 
 const Routines = props => {
   const { routines } = props.data.loggedInUser;

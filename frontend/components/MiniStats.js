@@ -28,6 +28,7 @@ const MiniStats = props => {
             padding: 0px;
             margin: 0px;
             font-weight: 700;
+            color: #05606e;
           }
         `}
       </style>

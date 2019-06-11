@@ -1,13 +1,15 @@
 type User {
-  id: ID! @id
+  id: ID! @id @unique
   username: String! @unique
   password: String!
-  routines: [Routine]
+  routines: [Routine] @relation(name: "UserOnRoutine", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Day {
   id: ID! @id
-  date: DateTime!
+  date: DateTime! 
   isCompleted: Boolean!
   partOf: Routine! @relation(name: "RoutineOnDay")
 }
@@ -15,6 +17,6 @@ type Day {
 type Routine {
   id: ID! @id
   name: String!
-  ownedBy: User!
+  ownedBy: User! @relation(name: "UserOnRoutine")
   days: [Day]! @relation(name: "RoutineOnDay", onDelete: CASCADE)
 }
