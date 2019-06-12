@@ -1,8 +1,4 @@
-import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
 import CreateRoutine from "./CreateRoutine";
-import UpdateRoutine from "./UpdateRoutine";
-import DeleteRoutine from "./DeleteRoutine";
 import SingleRoutine from "./SingleRoutine";
 
 const Routines = props => {

@@ -37,13 +37,26 @@ const loggedInUser = async (parent, args, context, info) => {
     // map through all those routines to get days
     // and compute completion percentage of all those routines
 
-    // TODO: get the days for each routine and compute the percentage
-    // reduce value to a weekly percentage
-    allRoutines.reduce((initialPercentage, singleRoutine) => {
-      // console.log(singleRoutine);
-      // console.log(initialPercentage);
-      return initialPercentage + 1;
-    }, 0);
+    // TODO: there is a problem with promise here
+    // Let's try again
+    // Read this: https://stackoverflow.com/questions/41243468/javascript-array-reduce-with-async-await
+    // async/await is dodgy with reduce
+    let finalPercentage = 0;
+    for (let i = 0; i < allRoutines.length; i++) {
+      const singleRoutine = allRoutines[i];
+      console.log(singleRoutine);
+      const days = await context.prisma.days({
+        where: {
+          partOf: {
+            id: singleRoutine.id
+          }
+        }
+      });
+      finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
+    }
+    console.log(finalPercentage);
+
+    // console.log(finalPercentage);
     // console.log(allRoutines);
 
     // END DEBUG
