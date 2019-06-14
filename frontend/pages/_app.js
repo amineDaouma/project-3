@@ -4,6 +4,16 @@ import withApollo from "../lib/withApollo";
 import Head from "next/head";
 
 class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+
   render() {
     const { Component, pageProps, apollo } = this.props;
     return (
@@ -17,6 +27,7 @@ class MyApp extends App {
             <link rel="stylesheet" href="/static/nprogress.css" />
           </Head>
           <Component {...pageProps} />
+          {/* <p>Test</p> */}
           <style jsx global>
             {`
               *,

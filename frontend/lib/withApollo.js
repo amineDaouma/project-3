@@ -2,10 +2,11 @@ import withApollo from "next-with-apollo";
 // the following import doesn't work as of apollo-boost v0.4.0
 import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost";
 import { setContext } from "apollo-link-context";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL_PROD, BACKEND_URL_DEV } from "../config";
 
 const httpLink = new HttpLink({
-  uri: BACKEND_URL,
+  uri:
+    process.env.NODE_ENV === "production" ? BACKEND_URL_PROD : BACKEND_URL_DEV,
   credentials: "include"
 });
 
