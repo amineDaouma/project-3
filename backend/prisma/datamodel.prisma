@@ -5,6 +5,7 @@ type User {
   routines: [Routine] @relation(name: "UserOnRoutine", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  isTrusted: Boolean!
 }
 
 type Day {

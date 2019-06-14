@@ -2,13 +2,17 @@ import CreateRoutine from "./CreateRoutine";
 import SingleRoutine from "./SingleRoutine";
 
 const Routines = props => {
-  const { routines } = props.data.loggedInUser;
+  const { routines, isTrusted } = props.data.loggedInUser;
 
   return (
     <div className="routine">
-      <CreateRoutine />
+      {isTrusted && <CreateRoutine />}
       {routines.map(routineData => (
-        <SingleRoutine key={routineData.id} routineData={routineData} />
+        <SingleRoutine
+          key={routineData.id}
+          routineData={routineData}
+          isTrusted={isTrusted}
+        />
       ))}
       <style jsx>
         {`

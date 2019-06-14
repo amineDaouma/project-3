@@ -16,7 +16,7 @@ const Home = () => (
               if (error) {
                 console.log(error);
               }
-
+              console.log(data);
               return (
                 <>
                   {loading && (
@@ -36,6 +36,7 @@ const Home = () => (
                       <p>Retrieving your habits...</p>
                     </div>
                   )}
+                  {/* TO REFACTOR: As props are drilled down too much, I can consider using the Context API */}
                   {data && !loading && <Navbar client={client} data={data} />}
                   {data.loggedInUser && <Routines data={data} />}
                   {data && data.loggedInUser && <MiniStats data={data} />}

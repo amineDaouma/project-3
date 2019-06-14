@@ -15,6 +15,7 @@ const CREATE_ROUTINE_MUTATION = gql`
 //refer to this link (https://www.bountysource.com/issues/47245060-refetchqueries-after-mutation)
 //on why we have duplicate definitions of LOGGEDINUSER_QUERY
 //it seems that export messes things up
+//another potential refactor is to pass in a string variable into gql
 const LOGGEDINUSER_QUERY = gql`
   query LOGGEDINUSER_QUERY {
     loggedInUser {
@@ -29,6 +30,7 @@ const LOGGEDINUSER_QUERY = gql`
           isCompleted
         }
       }
+      isTrusted
     }
   }
 `;
@@ -176,6 +178,14 @@ class CreateRoutine extends Component {
         >
           <AddIconSVG className="add" fill={"#47A3F3"} />
         </div>
+        <p
+          style={{
+            textAlign: "center"
+          }}
+        >
+          (placeholder percentage)%! Great work. You earn yourself a new habit.
+          Or update an existing one.
+        </p>
         <hr />
         <style jsx>{`
           .svg-container {

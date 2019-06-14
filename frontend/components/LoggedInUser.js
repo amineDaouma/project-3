@@ -1,5 +1,5 @@
 import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 const LOGGEDINUSER_QUERY = gql`
   query LOGGEDINUSER_QUERY {
@@ -15,6 +15,7 @@ const LOGGEDINUSER_QUERY = gql`
           isCompleted
         }
       }
+      isTrusted
     }
   }
 `;

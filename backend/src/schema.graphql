@@ -20,7 +20,7 @@ type User {
   id: ID!
   username: String!
   routines: [Routine]!
-  
+  isTrusted: Boolean!
 }
 
 type Day {

@@ -22,7 +22,6 @@ const setTokenLocally = async token => {
   localStorage.setItem("Authorization", `Bearer ${token}`);
 };
 
-// modify this later to work with an internal state and input fields
 class Signup extends Component {
   state = {
     username: "",
@@ -114,7 +113,6 @@ class Signup extends Component {
                   <button type="submit">Submit{loading ? "ting" : ""}</button>
                 </fieldset>
               </form>
-              {data && <p>Successful signup</p>}
               <style jsx>
                 {`
                   fieldset {

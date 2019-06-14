@@ -25,7 +25,7 @@ const DeleteRoutine = props => {
         if (error) console.log(error);
         return (
           <>
-            <button onClick={deleteRoutine}>
+            <button onClick={deleteRoutine} disabled={!props.isTrusted}>
               {loading ? (
                 <ScaleLoader
                   css={buttonSpinnerStyle}

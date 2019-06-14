@@ -77,6 +77,7 @@ class SingleRoutine extends Component {
           <SingleRoutineDetail
             handleClick={this.handleClick}
             routineData={this.props.routineData}
+            isTrusted={this.props.isTrusted}
           />
         )}
         <div className="container" onClick={this.handleClick}>
@@ -197,8 +198,9 @@ class SingleRoutineDetail extends Component {
               routineId={id}
               name={name}
               toggleEdited={this.toggleEdited}
+              isTrusted={this.props.isTrusted}
             />
-            <DeleteRoutine routineId={id} />
+            <DeleteRoutine routineId={id} isTrusted={this.props.isTrusted} />
           </div>
         </div>
         <style jsx>

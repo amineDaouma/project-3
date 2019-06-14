@@ -10,66 +10,45 @@ const loggedInUser = async (parent, args, context, info) => {
       process.env.APP_SECRET
     );
 
-    // REFACTORing zone
-    // I foresee problems here in the future
-    // be prepared for future refactoring
     const clientDate = new Date(context.request.get("clientDate"));
     // for reference, sunday-saturday is 0-6
     const dayOfTheWeek = clientDate.getDay();
-
-    // if the client's day is sunday, the server will compute if he is allowed
-    // to add a new routine
-
-    // DEBUG - find out the week
-    let dateOfWeekBefore = new Date();
-    dateOfWeekBefore.setDate(clientDate.getDate() - 6);
-    // console.log(clientDate);
-    // console.log(dateOfWeekBefore);
-    // get all routines
-    const allRoutines = await context.prisma.routines({
-      where: {
-        ownedBy: {
-          id
-        }
-      }
-    });
-
-    // map through all those routines to get days
-    // and compute completion percentage of all those routines
-
-    // TODO: there is a problem with promise here
-    // Let's try again
-    // Read this: https://stackoverflow.com/questions/41243468/javascript-array-reduce-with-async-await
-    // async/await is dodgy with reduce
-    let finalPercentage = 0;
-    for (let i = 0; i < allRoutines.length; i++) {
-      const singleRoutine = allRoutines[i];
-      console.log(singleRoutine);
-      const days = await context.prisma.days({
-        where: {
-          partOf: {
-            id: singleRoutine.id
-          }
-        }
-      });
-      finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
-    }
-    console.log(finalPercentage);
-
-    // console.log(finalPercentage);
-    // console.log(allRoutines);
-
-    // END DEBUG
-
     if (dayOfTheWeek === 0) {
-      // here's the logic get the days that are part of routines that are part of the user ids
+      // TO-REFACTOR zone
+      // This block definitely needs testing
 
+      // if the client's day is sunday, the server will compute if he is allowed
+      // to add a new routine
       let dateOfWeekBefore = new Date();
       dateOfWeekBefore.setDate(clientDate.getDate() - 6);
 
-      const allRoutines = await context.prisma.routines();
+      // get all routines owned by the logged in user
+      const allRoutines = await context.prisma.routines({
+        where: {
+          ownedBy: {
+            id
+          }
+        }
+      });
 
-      computeWeeklyCompletion();
+      // map through all those routines to get days
+      // and compute completion percentage of all those routines
+      // Lesson learnt: async/await is dodgy with reduce
+      // Read this: https://stackoverflow.com/questions/41243468/javascript-array-reduce-with-async-await
+      let finalPercentage = 0;
+      for (let i = 0; i < allRoutines.length; i++) {
+        const singleRoutine = allRoutines[i];
+        console.log(singleRoutine);
+        const days = await context.prisma.days({
+          where: {
+            partOf: {
+              id: singleRoutine.id
+            }
+          }
+        });
+        finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
+      }
+      console.log(finalPercentage);
     }
 
     const today = new Date();

@@ -8,6 +8,14 @@ const createRoutine = async (parent, { name }, context, info) => {
   const clientDate = context.request.get("clientDate").slice(0, 10);
   if (id) {
     if (!name) throw new Error("Your habit name is empty.");
+    await context.prisma.updateUser({
+      where: {
+        id
+      },
+      data: {
+        isTrusted: false
+      }
+    });
     const routine = await context.prisma.createRoutine(
       {
         name,
@@ -55,6 +63,14 @@ const deleteRoutine = async (parent, { routineId }, context, info) => {
   const token = context.request.get("Authorization");
   const id = authorise(token);
   if (id) {
+    await context.prisma.updateUser({
+      where: {
+        id
+      },
+      data: {
+        isTrusted: false
+      }
+    });
     const routine = await context.prisma.deleteRoutine({ id: routineId });
     return routine;
   } else throw Error("You are not logged in");
@@ -64,6 +80,14 @@ const updateRoutine = async (parent, { routineId, name }, context, info) => {
   const token = context.request.get("Authorization");
   const id = authorise(token);
   if (id) {
+    await context.prisma.updateUser({
+      where: {
+        id
+      },
+      data: {
+        isTrusted: false
+      }
+    });
     const routine = await context.prisma.updateRoutine({
       data: {
         name
@@ -111,7 +135,8 @@ const signup = async (parent, args, context) => {
 
   // create the user
   const user = await context.prisma.createUser({
-    ...args
+    ...args,
+    isTrusted: true
   });
 
   // create the JWT based on a secret key

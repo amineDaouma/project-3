@@ -203,50 +203,35 @@ export type UserOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "isTrusted_ASC"
+  | "isTrusted_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface UserUpsertWithoutRoutinesInput {
+  update: UserUpdateWithoutRoutinesDataInput;
+  create: UserCreateWithoutRoutinesInput;
+}
 
 export type DayWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface RoutineWhereInput {
+export interface RoutineCreateWithoutDaysInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  ownedBy?: Maybe<UserWhereInput>;
-  days_every?: Maybe<DayWhereInput>;
-  days_some?: Maybe<DayWhereInput>;
-  days_none?: Maybe<DayWhereInput>;
-  AND?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
-  OR?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
-  NOT?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
+  name: String;
+  ownedBy: UserCreateOneWithoutRoutinesInput;
+}
+
+export interface DayUpdateManyWithWhereNestedInput {
+  where: DayScalarWhereInput;
+  data: DayUpdateManyDataInput;
+}
+
+export interface UserCreateOneWithoutRoutinesInput {
+  create?: Maybe<UserCreateWithoutRoutinesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserWhereInput {
@@ -311,84 +296,46 @@ export interface UserWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
+  isTrusted?: Maybe<Boolean>;
+  isTrusted_not?: Maybe<Boolean>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface DayWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-  isCompleted_not?: Maybe<Boolean>;
-  partOf?: Maybe<RoutineWhereInput>;
-  AND?: Maybe<DayWhereInput[] | DayWhereInput>;
-  OR?: Maybe<DayWhereInput[] | DayWhereInput>;
-  NOT?: Maybe<DayWhereInput[] | DayWhereInput>;
-}
-
-export type RoutineWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  username?: Maybe<String>;
-}>;
-
-export interface DayCreateInput {
-  id?: Maybe<ID_Input>;
-  date: DateTimeInput;
-  isCompleted: Boolean;
-  partOf: RoutineCreateOneWithoutDaysInput;
-}
-
-export interface RoutineCreateOneWithoutDaysInput {
-  create?: Maybe<RoutineCreateWithoutDaysInput>;
-  connect?: Maybe<RoutineWhereUniqueInput>;
-}
-
-export interface RoutineCreateWithoutDaysInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  ownedBy: UserCreateOneWithoutRoutinesInput;
-}
-
-export interface UserCreateOneWithoutRoutinesInput {
-  create?: Maybe<UserCreateWithoutRoutinesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserCreateWithoutRoutinesInput {
   id?: Maybe<ID_Input>;
   username: String;
   password: String;
+  isTrusted: Boolean;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface DayUpdateInput {
   date?: Maybe<DateTimeInput>;
   isCompleted?: Maybe<Boolean>;
   partOf?: Maybe<RoutineUpdateOneRequiredWithoutDaysInput>;
+}
+
+export interface DaySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<DayWhereInput>;
+  AND?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
+  OR?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
+  NOT?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
 }
 
 export interface RoutineUpdateOneRequiredWithoutDaysInput {
@@ -398,205 +345,13 @@ export interface RoutineUpdateOneRequiredWithoutDaysInput {
   connect?: Maybe<RoutineWhereUniqueInput>;
 }
 
+export interface RoutineUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
 export interface RoutineUpdateWithoutDaysDataInput {
   name?: Maybe<String>;
   ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutRoutinesInput {
-  create?: Maybe<UserCreateWithoutRoutinesInput>;
-  update?: Maybe<UserUpdateWithoutRoutinesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutRoutinesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutRoutinesDataInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutRoutinesInput {
-  update: UserUpdateWithoutRoutinesDataInput;
-  create: UserCreateWithoutRoutinesInput;
-}
-
-export interface RoutineUpsertWithoutDaysInput {
-  update: RoutineUpdateWithoutDaysDataInput;
-  create: RoutineCreateWithoutDaysInput;
-}
-
-export interface DayUpdateManyMutationInput {
-  date?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-}
-
-export interface RoutineCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  ownedBy: UserCreateOneWithoutRoutinesInput;
-  days?: Maybe<DayCreateManyWithoutPartOfInput>;
-}
-
-export interface DayCreateManyWithoutPartOfInput {
-  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
-  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
-}
-
-export interface DayCreateWithoutPartOfInput {
-  id?: Maybe<ID_Input>;
-  date: DateTimeInput;
-  isCompleted: Boolean;
-}
-
-export interface RoutineUpdateInput {
-  name?: Maybe<String>;
-  ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
-  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
-}
-
-export interface DayUpdateManyWithoutPartOfInput {
-  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
-  delete?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
-  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
-  set?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
-  disconnect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
-  update?: Maybe<
-    | DayUpdateWithWhereUniqueWithoutPartOfInput[]
-    | DayUpdateWithWhereUniqueWithoutPartOfInput
-  >;
-  upsert?: Maybe<
-    | DayUpsertWithWhereUniqueWithoutPartOfInput[]
-    | DayUpsertWithWhereUniqueWithoutPartOfInput
-  >;
-  deleteMany?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
-  updateMany?: Maybe<
-    DayUpdateManyWithWhereNestedInput[] | DayUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface DayUpdateWithWhereUniqueWithoutPartOfInput {
-  where: DayWhereUniqueInput;
-  data: DayUpdateWithoutPartOfDataInput;
-}
-
-export interface DayUpdateWithoutPartOfDataInput {
-  date?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-}
-
-export interface DayUpsertWithWhereUniqueWithoutPartOfInput {
-  where: DayWhereUniqueInput;
-  update: DayUpdateWithoutPartOfDataInput;
-  create: DayCreateWithoutPartOfInput;
-}
-
-export interface DayScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-  isCompleted_not?: Maybe<Boolean>;
-  AND?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
-  OR?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
-  NOT?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
-}
-
-export interface DayUpdateManyWithWhereNestedInput {
-  where: DayScalarWhereInput;
-  data: DayUpdateManyDataInput;
-}
-
-export interface DayUpdateManyDataInput {
-  date?: Maybe<DateTimeInput>;
-  isCompleted?: Maybe<Boolean>;
-}
-
-export interface RoutineUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  username: String;
-  password: String;
-  routines?: Maybe<RoutineCreateManyWithoutOwnedByInput>;
-}
-
-export interface RoutineCreateManyWithoutOwnedByInput {
-  create?: Maybe<
-    RoutineCreateWithoutOwnedByInput[] | RoutineCreateWithoutOwnedByInput
-  >;
-  connect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
-}
-
-export interface RoutineCreateWithoutOwnedByInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  days?: Maybe<DayCreateManyWithoutPartOfInput>;
-}
-
-export interface UserUpdateInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  routines?: Maybe<RoutineUpdateManyWithoutOwnedByInput>;
-}
-
-export interface RoutineUpdateManyWithoutOwnedByInput {
-  create?: Maybe<
-    RoutineCreateWithoutOwnedByInput[] | RoutineCreateWithoutOwnedByInput
-  >;
-  delete?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
-  connect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
-  set?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
-  disconnect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
-  update?: Maybe<
-    | RoutineUpdateWithWhereUniqueWithoutOwnedByInput[]
-    | RoutineUpdateWithWhereUniqueWithoutOwnedByInput
-  >;
-  upsert?: Maybe<
-    | RoutineUpsertWithWhereUniqueWithoutOwnedByInput[]
-    | RoutineUpsertWithWhereUniqueWithoutOwnedByInput
-  >;
-  deleteMany?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
-  updateMany?: Maybe<
-    | RoutineUpdateManyWithWhereNestedInput[]
-    | RoutineUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
-  where: RoutineWhereUniqueInput;
-  data: RoutineUpdateWithoutOwnedByDataInput;
-}
-
-export interface RoutineUpdateWithoutOwnedByDataInput {
-  name?: Maybe<String>;
-  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
-}
-
-export interface RoutineUpsertWithWhereUniqueWithoutOwnedByInput {
-  where: RoutineWhereUniqueInput;
-  update: RoutineUpdateWithoutOwnedByDataInput;
-  create: RoutineCreateWithoutOwnedByInput;
 }
 
 export interface RoutineScalarWhereInput {
@@ -633,29 +388,166 @@ export interface RoutineScalarWhereInput {
   NOT?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
 }
 
-export interface RoutineUpdateManyWithWhereNestedInput {
-  where: RoutineScalarWhereInput;
-  data: RoutineUpdateManyDataInput;
+export interface UserUpdateOneRequiredWithoutRoutinesInput {
+  create?: Maybe<UserCreateWithoutRoutinesInput>;
+  update?: Maybe<UserUpdateWithoutRoutinesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutRoutinesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface RoutineUpdateManyDataInput {
+export interface RoutineUpsertWithWhereUniqueWithoutOwnedByInput {
+  where: RoutineWhereUniqueInput;
+  update: RoutineUpdateWithoutOwnedByDataInput;
+  create: RoutineCreateWithoutOwnedByInput;
+}
+
+export interface UserUpdateWithoutRoutinesDataInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  isTrusted?: Maybe<Boolean>;
+}
+
+export interface RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
+  where: RoutineWhereUniqueInput;
+  data: RoutineUpdateWithoutOwnedByDataInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  password: String;
+  routines?: Maybe<RoutineCreateManyWithoutOwnedByInput>;
+  isTrusted: Boolean;
+}
+
+export interface RoutineUpdateManyWithoutOwnedByInput {
+  create?: Maybe<
+    RoutineCreateWithoutOwnedByInput[] | RoutineCreateWithoutOwnedByInput
+  >;
+  delete?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
+  connect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
+  set?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
+  disconnect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
+  update?: Maybe<
+    | RoutineUpdateWithWhereUniqueWithoutOwnedByInput[]
+    | RoutineUpdateWithWhereUniqueWithoutOwnedByInput
+  >;
+  upsert?: Maybe<
+    | RoutineUpsertWithWhereUniqueWithoutOwnedByInput[]
+    | RoutineUpsertWithWhereUniqueWithoutOwnedByInput
+  >;
+  deleteMany?: Maybe<RoutineScalarWhereInput[] | RoutineScalarWhereInput>;
+  updateMany?: Maybe<
+    | RoutineUpdateManyWithWhereNestedInput[]
+    | RoutineUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RoutineUpsertWithoutDaysInput {
+  update: RoutineUpdateWithoutDaysDataInput;
+  create: RoutineCreateWithoutDaysInput;
+}
+
+export interface RoutineCreateWithoutOwnedByInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  days?: Maybe<DayCreateManyWithoutPartOfInput>;
+}
+
+export interface DayCreateInput {
+  id?: Maybe<ID_Input>;
+  date: DateTimeInput;
+  isCompleted: Boolean;
+  partOf: RoutineCreateOneWithoutDaysInput;
+}
+
+export interface DayScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  date?: Maybe<DateTimeInput>;
+  date_not?: Maybe<DateTimeInput>;
+  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_lt?: Maybe<DateTimeInput>;
+  date_lte?: Maybe<DateTimeInput>;
+  date_gt?: Maybe<DateTimeInput>;
+  date_gte?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+  isCompleted_not?: Maybe<Boolean>;
+  AND?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
+  OR?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
+  NOT?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
+}
+
+export interface RoutineUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
-export interface UserUpdateManyMutationInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
+export interface DayUpdateManyMutationInput {
+  date?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
 }
 
-export interface DaySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<DayWhereInput>;
-  AND?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
-  OR?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
-  NOT?: Maybe<DaySubscriptionWhereInput[] | DaySubscriptionWhereInput>;
+export interface DayUpdateManyDataInput {
+  date?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+}
+
+export interface RoutineWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  ownedBy?: Maybe<UserWhereInput>;
+  days_every?: Maybe<DayWhereInput>;
+  days_some?: Maybe<DayWhereInput>;
+  days_none?: Maybe<DayWhereInput>;
+  AND?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
+  OR?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
+  NOT?: Maybe<RoutineWhereInput[] | RoutineWhereInput>;
+}
+
+export interface RoutineCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  ownedBy: UserCreateOneWithoutRoutinesInput;
+  days?: Maybe<DayCreateManyWithoutPartOfInput>;
 }
 
 export interface RoutineSubscriptionWhereInput {
@@ -669,19 +561,452 @@ export interface RoutineSubscriptionWhereInput {
   NOT?: Maybe<RoutineSubscriptionWhereInput[] | RoutineSubscriptionWhereInput>;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+export interface DayCreateManyWithoutPartOfInput {
+  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
+  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+}
+
+export interface RoutineUpdateManyWithWhereNestedInput {
+  where: RoutineScalarWhereInput;
+  data: RoutineUpdateManyDataInput;
+}
+
+export interface DayCreateWithoutPartOfInput {
+  id?: Maybe<ID_Input>;
+  date: DateTimeInput;
+  isCompleted: Boolean;
+}
+
+export interface RoutineUpdateWithoutOwnedByDataInput {
+  name?: Maybe<String>;
+  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
+}
+
+export interface RoutineUpdateInput {
+  name?: Maybe<String>;
+  ownedBy?: Maybe<UserUpdateOneRequiredWithoutRoutinesInput>;
+  days?: Maybe<DayUpdateManyWithoutPartOfInput>;
+}
+
+export interface UserUpdateInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  routines?: Maybe<RoutineUpdateManyWithoutOwnedByInput>;
+  isTrusted?: Maybe<Boolean>;
+}
+
+export interface RoutineCreateOneWithoutDaysInput {
+  create?: Maybe<RoutineCreateWithoutDaysInput>;
+  connect?: Maybe<RoutineWhereUniqueInput>;
+}
+
+export interface DayUpsertWithWhereUniqueWithoutPartOfInput {
+  where: DayWhereUniqueInput;
+  update: DayUpdateWithoutPartOfDataInput;
+  create: DayCreateWithoutPartOfInput;
+}
+
+export interface DayUpdateWithoutPartOfDataInput {
+  date?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+}
+
+export interface DayUpdateWithWhereUniqueWithoutPartOfInput {
+  where: DayWhereUniqueInput;
+  data: DayUpdateWithoutPartOfDataInput;
+}
+
+export interface DayUpdateManyWithoutPartOfInput {
+  create?: Maybe<DayCreateWithoutPartOfInput[] | DayCreateWithoutPartOfInput>;
+  delete?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+  connect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+  set?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+  disconnect?: Maybe<DayWhereUniqueInput[] | DayWhereUniqueInput>;
+  update?: Maybe<
+    | DayUpdateWithWhereUniqueWithoutPartOfInput[]
+    | DayUpdateWithWhereUniqueWithoutPartOfInput
+  >;
+  upsert?: Maybe<
+    | DayUpsertWithWhereUniqueWithoutPartOfInput[]
+    | DayUpsertWithWhereUniqueWithoutPartOfInput
+  >;
+  deleteMany?: Maybe<DayScalarWhereInput[] | DayScalarWhereInput>;
+  updateMany?: Maybe<
+    DayUpdateManyWithWhereNestedInput[] | DayUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface DayWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  date?: Maybe<DateTimeInput>;
+  date_not?: Maybe<DateTimeInput>;
+  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_lt?: Maybe<DateTimeInput>;
+  date_lte?: Maybe<DateTimeInput>;
+  date_gt?: Maybe<DateTimeInput>;
+  date_gte?: Maybe<DateTimeInput>;
+  isCompleted?: Maybe<Boolean>;
+  isCompleted_not?: Maybe<Boolean>;
+  partOf?: Maybe<RoutineWhereInput>;
+  AND?: Maybe<DayWhereInput[] | DayWhereInput>;
+  OR?: Maybe<DayWhereInput[] | DayWhereInput>;
+  NOT?: Maybe<DayWhereInput[] | DayWhereInput>;
+}
+
+export interface RoutineCreateManyWithoutOwnedByInput {
+  create?: Maybe<
+    RoutineCreateWithoutOwnedByInput[] | RoutineCreateWithoutOwnedByInput
+  >;
+  connect?: Maybe<RoutineWhereUniqueInput[] | RoutineWhereUniqueInput>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  username?: Maybe<String>;
+}>;
+
+export type RoutineWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateManyMutationInput {
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  isTrusted?: Maybe<Boolean>;
 }
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  username: String;
+  password: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  isTrusted: Boolean;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  isTrusted: () => Promise<Boolean>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isTrusted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface AggregateDay {
+  count: Int;
+}
+
+export interface AggregateDayPromise
+  extends Promise<AggregateDay>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDaySubscription
+  extends Promise<AsyncIterator<AggregateDay>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RoutineSubscriptionPayload {
+  mutation: MutationType;
+  node: Routine;
+  updatedFields: String[];
+  previousValues: RoutinePreviousValues;
+}
+
+export interface RoutineSubscriptionPayloadPromise
+  extends Promise<RoutineSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RoutinePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RoutinePreviousValuesPromise>() => T;
+}
+
+export interface RoutineSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RoutineSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RoutineSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RoutinePreviousValuesSubscription>() => T;
+}
+
+export interface DayEdge {
+  node: Day;
+  cursor: String;
+}
+
+export interface DayEdgePromise extends Promise<DayEdge>, Fragmentable {
+  node: <T = DayPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DayEdgeSubscription
+  extends Promise<AsyncIterator<DayEdge>>,
+    Fragmentable {
+  node: <T = DaySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface User {
+  id: ID_Output;
+  username: String;
+  password: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  isTrusted: Boolean;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  routines: <T = FragmentableArray<Routine>>(args?: {
+    where?: RoutineWhereInput;
+    orderBy?: RoutineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  isTrusted: () => Promise<Boolean>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  routines: <T = Promise<AsyncIterator<RoutineSubscription>>>(args?: {
+    where?: RoutineWhereInput;
+    orderBy?: RoutineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isTrusted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  routines: <T = FragmentableArray<Routine>>(args?: {
+    where?: RoutineWhereInput;
+    orderBy?: RoutineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  isTrusted: () => Promise<Boolean>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DayConnection {
+  pageInfo: PageInfo;
+  edges: DayEdge[];
+}
+
+export interface DayConnectionPromise
+  extends Promise<DayConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DayEdge>>() => T;
+  aggregate: <T = AggregateDayPromise>() => T;
+}
+
+export interface DayConnectionSubscription
+  extends Promise<AsyncIterator<DayConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DayEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDaySubscription>() => T;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AggregateRoutine {
+  count: Int;
+}
+
+export interface AggregateRoutinePromise
+  extends Promise<AggregateRoutine>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRoutineSubscription
+  extends Promise<AsyncIterator<AggregateRoutine>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DayPreviousValues {
+  id: ID_Output;
+  date: DateTimeOutput;
+  isCompleted: Boolean;
+}
+
+export interface DayPreviousValuesPromise
+  extends Promise<DayPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  date: () => Promise<DateTimeOutput>;
+  isCompleted: () => Promise<Boolean>;
+}
+
+export interface DayPreviousValuesSubscription
+  extends Promise<AsyncIterator<DayPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isCompleted: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface DaySubscriptionPayload {
+  mutation: MutationType;
+  node: Day;
+  updatedFields: String[];
+  previousValues: DayPreviousValues;
+}
+
+export interface DaySubscriptionPayloadPromise
+  extends Promise<DaySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = DayPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = DayPreviousValuesPromise>() => T;
+}
+
+export interface DaySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DaySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = DaySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = DayPreviousValuesSubscription>() => T;
 }
 
 export interface Day {
@@ -711,6 +1036,42 @@ export interface DayNullablePromise extends Promise<Day | null>, Fragmentable {
   date: () => Promise<DateTimeOutput>;
   isCompleted: () => Promise<Boolean>;
   partOf: <T = RoutinePromise>() => T;
+}
+
+export interface RoutinePreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface RoutinePreviousValuesPromise
+  extends Promise<RoutinePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface RoutinePreviousValuesSubscription
+  extends Promise<AsyncIterator<RoutinePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface RoutineEdge {
+  node: Routine;
+  cursor: String;
+}
+
+export interface RoutineEdgePromise extends Promise<RoutineEdge>, Fragmentable {
+  node: <T = RoutinePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface RoutineEdgeSubscription
+  extends Promise<AsyncIterator<RoutineEdge>>,
+    Fragmentable {
+  node: <T = RoutineSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Routine {
@@ -767,221 +1128,6 @@ export interface RoutineNullablePromise
   }) => T;
 }
 
-export interface User {
-  id: ID_Output;
-  username: String;
-  password: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  routines: <T = FragmentableArray<Routine>>(args?: {
-    where?: RoutineWhereInput;
-    orderBy?: RoutineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  routines: <T = Promise<AsyncIterator<RoutineSubscription>>>(args?: {
-    where?: RoutineWhereInput;
-    orderBy?: RoutineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  routines: <T = FragmentableArray<Routine>>(args?: {
-    where?: RoutineWhereInput;
-    orderBy?: RoutineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface DayConnection {
-  pageInfo: PageInfo;
-  edges: DayEdge[];
-}
-
-export interface DayConnectionPromise
-  extends Promise<DayConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DayEdge>>() => T;
-  aggregate: <T = AggregateDayPromise>() => T;
-}
-
-export interface DayConnectionSubscription
-  extends Promise<AsyncIterator<DayConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DayEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDaySubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DayEdge {
-  node: Day;
-  cursor: String;
-}
-
-export interface DayEdgePromise extends Promise<DayEdge>, Fragmentable {
-  node: <T = DayPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DayEdgeSubscription
-  extends Promise<AsyncIterator<DayEdge>>,
-    Fragmentable {
-  node: <T = DaySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateDay {
-  count: Int;
-}
-
-export interface AggregateDayPromise
-  extends Promise<AggregateDay>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDaySubscription
-  extends Promise<AsyncIterator<AggregateDay>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface RoutineConnection {
-  pageInfo: PageInfo;
-  edges: RoutineEdge[];
-}
-
-export interface RoutineConnectionPromise
-  extends Promise<RoutineConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<RoutineEdge>>() => T;
-  aggregate: <T = AggregateRoutinePromise>() => T;
-}
-
-export interface RoutineConnectionSubscription
-  extends Promise<AsyncIterator<RoutineConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<RoutineEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateRoutineSubscription>() => T;
-}
-
-export interface RoutineEdge {
-  node: Routine;
-  cursor: String;
-}
-
-export interface RoutineEdgePromise extends Promise<RoutineEdge>, Fragmentable {
-  node: <T = RoutinePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface RoutineEdgeSubscription
-  extends Promise<AsyncIterator<RoutineEdge>>,
-    Fragmentable {
-  node: <T = RoutineSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateRoutine {
-  count: Int;
-}
-
-export interface AggregateRoutinePromise
-  extends Promise<AggregateRoutine>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateRoutineSubscription
-  extends Promise<AsyncIterator<AggregateRoutine>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -997,129 +1143,6 @@ export interface UserEdgeSubscription
     Fragmentable {
   node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface DaySubscriptionPayload {
-  mutation: MutationType;
-  node: Day;
-  updatedFields: String[];
-  previousValues: DayPreviousValues;
-}
-
-export interface DaySubscriptionPayloadPromise
-  extends Promise<DaySubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = DayPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = DayPreviousValuesPromise>() => T;
-}
-
-export interface DaySubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<DaySubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = DaySubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = DayPreviousValuesSubscription>() => T;
-}
-
-export interface DayPreviousValues {
-  id: ID_Output;
-  date: DateTimeOutput;
-  isCompleted: Boolean;
-}
-
-export interface DayPreviousValuesPromise
-  extends Promise<DayPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  date: () => Promise<DateTimeOutput>;
-  isCompleted: () => Promise<Boolean>;
-}
-
-export interface DayPreviousValuesSubscription
-  extends Promise<AsyncIterator<DayPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  isCompleted: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface RoutineSubscriptionPayload {
-  mutation: MutationType;
-  node: Routine;
-  updatedFields: String[];
-  previousValues: RoutinePreviousValues;
-}
-
-export interface RoutineSubscriptionPayloadPromise
-  extends Promise<RoutineSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = RoutinePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = RoutinePreviousValuesPromise>() => T;
-}
-
-export interface RoutineSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<RoutineSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = RoutineSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = RoutinePreviousValuesSubscription>() => T;
-}
-
-export interface RoutinePreviousValues {
-  id: ID_Output;
-  name: String;
-}
-
-export interface RoutinePreviousValuesPromise
-  extends Promise<RoutinePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface RoutinePreviousValuesSubscription
-  extends Promise<AsyncIterator<RoutinePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1147,33 +1170,33 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  username: String;
-  password: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface RoutineConnection {
+  pageInfo: PageInfo;
+  edges: RoutineEdge[];
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
+export interface RoutineConnectionPromise
+  extends Promise<RoutineConnection>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RoutineEdge>>() => T;
+  aggregate: <T = AggregateRoutinePromise>() => T;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface RoutineConnectionSubscription
+  extends Promise<AsyncIterator<RoutineConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RoutineEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRoutineSubscription>() => T;
 }
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1197,16 +1220,9 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
-
-export type Long = string;
 
 /**
  * Model Metadata

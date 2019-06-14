@@ -487,6 +487,7 @@ type User {
   routines(where: RoutineWhereInput, orderBy: RoutineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Routine!]
   createdAt: DateTime!
   updatedAt: DateTime!
+  isTrusted: Boolean!
 }
 
 type UserConnection {
@@ -500,6 +501,7 @@ input UserCreateInput {
   username: String!
   password: String!
   routines: RoutineCreateManyWithoutOwnedByInput
+  isTrusted: Boolean!
 }
 
 input UserCreateOneWithoutRoutinesInput {
@@ -511,6 +513,7 @@ input UserCreateWithoutRoutinesInput {
   id: ID
   username: String!
   password: String!
+  isTrusted: Boolean!
 }
 
 type UserEdge {
@@ -529,6 +532,8 @@ enum UserOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  isTrusted_ASC
+  isTrusted_DESC
 }
 
 type UserPreviousValues {
@@ -537,6 +542,7 @@ type UserPreviousValues {
   password: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  isTrusted: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -561,11 +567,13 @@ input UserUpdateInput {
   username: String
   password: String
   routines: RoutineUpdateManyWithoutOwnedByInput
+  isTrusted: Boolean
 }
 
 input UserUpdateManyMutationInput {
   username: String
   password: String
+  isTrusted: Boolean
 }
 
 input UserUpdateOneRequiredWithoutRoutinesInput {
@@ -578,6 +586,7 @@ input UserUpdateOneRequiredWithoutRoutinesInput {
 input UserUpdateWithoutRoutinesDataInput {
   username: String
   password: String
+  isTrusted: Boolean
 }
 
 input UserUpsertWithoutRoutinesInput {
@@ -647,6 +656,8 @@ input UserWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  isTrusted: Boolean
+  isTrusted_not: Boolean
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

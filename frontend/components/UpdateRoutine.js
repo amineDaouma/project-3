@@ -44,7 +44,10 @@ class UpdateRoutine extends Component {
           if (error) console.log(error);
           return (
             <>
-              <button onClick={updateMutation}>
+              <button
+                onClick={updateMutation}
+                disabled={!this.props.isTrusted && !isEdited}
+              >
                 {loading ? (
                   <ScaleLoader
                     css={buttonSpinnerStyle}
