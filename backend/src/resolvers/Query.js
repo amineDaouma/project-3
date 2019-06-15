@@ -11,6 +11,7 @@ const loggedInUser = async (parent, args, context, info) => {
     );
 
     const clientDate = new Date(context.request.get("clientDate"));
+    const clientOffsetHours = clientDate.getTimezoneOffset() / 60;
     // for reference, sunday-saturday is 0-6
     const dayOfTheWeek = clientDate.getDay();
     if (dayOfTheWeek === 0) {
@@ -38,7 +39,6 @@ const loggedInUser = async (parent, args, context, info) => {
       let finalPercentage = 0;
       for (let i = 0; i < allRoutines.length; i++) {
         const singleRoutine = allRoutines[i];
-        console.log(singleRoutine);
         const days = await context.prisma.days({
           where: {
             partOf: {
@@ -48,15 +48,13 @@ const loggedInUser = async (parent, args, context, info) => {
         });
         finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
       }
-      console.log(finalPercentage);
     }
-
-    const today = new Date();
     const nextDay = new Date();
-    nextDay.setDate(today.getDate() + 1);
-    const todayString = today.toISOString().slice(0, 10);
+    nextDay.setDate(clientDate.getDate() + 1);
+    const todayString = clientDate.toISOString().slice(0, 10);
     const nextDayString = nextDay.toISOString().slice(0, 10);
-
+    console.log(todayString);
+    console.log(nextDayString);
     // query for routines that don't have a day between today and the next day
     // REFACTOR: make it so that this is only done once a day by checking if the user has logged in today
     const routines = await context.prisma.routines({
