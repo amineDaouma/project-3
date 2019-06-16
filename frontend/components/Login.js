@@ -53,16 +53,19 @@ class Login extends Component {
           username,
           password
         }}
-        // use update to setTokenLocally first and write locally
-        // when we change routes, the next request should have the correct token
-        // in the header
+        /*  Use update to setTokenLocally first and write locally
+         *  when we change routes, the next request should have the correct token
+         *  in the header
+         */
         onCompleted={data => {
           Router.push("/");
         }}
-        //this prop and the cache.writeQuery is required if we want to give time
-        //for setContext in withApollo to set the token in the request header.
-        //The token is needed if we want the redirected index page to successfully
-        //query for logged-in user
+        /*
+         *  This prop and the cache.writeQuery is required if we want to give time
+         *  for setContext in withApollo to set the token in the request header.
+         *  The token is needed if we want the redirected index page to successfully
+         *  query for logged-in user
+         */
         update={(cache, { data: { login } }) => {
           cache.writeQuery({
             query: LOGGEDINUSER_QUERY,
@@ -88,7 +91,6 @@ class Login extends Component {
                   <p>{`${error.message.replace("GraphQL error: ", "")}`}</p>
                 </div>
               )}
-              <div className="signup-content" />
               <form
                 method="post"
                 onSubmit={e => {
@@ -125,9 +127,11 @@ class Login extends Component {
                   </button>
                 </fieldset>
               </form>
-              {data && <p>Successful login</p>}
               <style jsx>
                 {`
+                  form {
+                    width: 80%;
+                  }
                   fieldset {
                     border: none;
                   }
@@ -177,13 +181,23 @@ class Login extends Component {
                   button:hover {
                     background: #2186eb;
                   }
+                  form {
+                    width: 80%;
+                  }
                   .signup-container {
-                    width: 512px;
+                    display: flex;
+                    justify-content: center;
+                    max-width: 512px;
                     margin: 32px auto;
-                    padding: 64px 96px;
+                    padding: 64px 0px;
                     background: #ffffff;
                     box-shadow: 0px 7px 5px rgba(154, 165, 177, 0.5);
                     border-radius: 5px;
+                  }
+                  @media (max-width: 400px) {
+                    .signup-container {
+                      margin: 32px 8px;
+                    }
                   }
 
                   h1 {

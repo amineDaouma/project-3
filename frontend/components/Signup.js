@@ -165,12 +165,19 @@ class Signup extends Component {
                     background: #2186eb;
                   }
                   .signup-container {
-                    width: 512px;
+                    display: flex;
+                    justify-content: center;
+                    max-width: 512px;
                     margin: 32px auto;
-                    padding: 64px 96px;
+                    padding: 64px 0px;
                     background: #ffffff;
                     box-shadow: 0px 7px 5px rgba(154, 165, 177, 0.5);
                     border-radius: 5px;
+                  }
+                  @media (max-width: 400px) {
+                    .signup-container {
+                      margin: 32px 8px;
+                    }
                   }
 
                   h1 {

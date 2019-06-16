@@ -48,7 +48,8 @@ const Home = () => (
             {`
               .Home {
                 z-index: 1;
-                margin: 0px 256px;
+                max-width: 768px;
+                margin: 0 auto;
                 margin-top: 8px;
               }
               .loader-container {

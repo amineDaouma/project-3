@@ -127,7 +127,8 @@ class SingleRoutine extends Component {
           <span>{name}</span>
           <style jsx>{`
             .container {
-              margin: 4px 128px;
+              margin: 4px auto;
+              max-width: 512px;
               padding: 8px;
               height: 48px;
               background-color: white;
@@ -205,12 +206,12 @@ class SingleRoutineDetail extends Component {
         </div>
         <style jsx>
           {`
-          .buttons {
-            padding: 8px;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-          }
+            .buttons {
+              padding: 8px;
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-end;
+            }
             .SingleRoutineDetail {
               position:relative;
               height: 128px;
