@@ -20,6 +20,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://habit-90d1341c9d.herokuapp.com/habit-backend/prod`
+  endpoint: process.env.PRISMA_ENDPOINT
 });
 exports.prisma = new exports.Prisma();

@@ -1,4 +1,3 @@
-#endpoint: https://us1.prisma.sh/wanzulfikri-dbce4e/habit/dev
 endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: datamodel.prisma
 

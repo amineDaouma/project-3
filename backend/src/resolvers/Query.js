@@ -3,7 +3,7 @@ const computeWeeklyCompletion = require("../utils/computeWeeklyCompletion");
 
 const loggedInUser = async (parent, args, context, info) => {
   const authorization = context.request.get("Authorization");
-
+  console.log(process.env.PRISMA_ENDPOINT);
   if (authorization) {
     const { id } = jwt.verify(
       authorization.replace("Bearer ", ""),
@@ -11,9 +11,13 @@ const loggedInUser = async (parent, args, context, info) => {
     );
 
     const clientDate = new Date(context.request.get("clientDate"));
-    const clientOffsetHours = clientDate.getTimezoneOffset() / 60;
     // for reference, sunday-saturday is 0-6
     const dayOfTheWeek = clientDate.getDay();
+
+    // debug
+    console.log(dayOfTheWeek);
+
+    //
     if (dayOfTheWeek === 0) {
       // TO-REFACTOR zone
       // This block definitely needs testing
@@ -21,9 +25,10 @@ const loggedInUser = async (parent, args, context, info) => {
       // if the client's day is sunday, the server will compute if he is allowed
       // to add a new routine
       let dateOfWeekBefore = new Date();
-      dateOfWeekBefore.setDate(clientDate.getDate() - 6);
+      dateOfWeekBefore.setDate(clientDate.getDate() - 7);
 
       // get all routines owned by the logged in user
+      // and are between today and last monday
       const allRoutines = await context.prisma.routines({
         where: {
           ownedBy: {
@@ -43,18 +48,31 @@ const loggedInUser = async (parent, args, context, info) => {
           where: {
             partOf: {
               id: singleRoutine.id
-            }
+            },
+            date_gte: dateOfWeekBefore.toISOString(),
+            date_lte: clientDate.toISOString()
           }
         });
+        console.log(days);
         finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
+      }
+      console.log(finalPercentage);
+      console.log(finalPercentage === 1);
+      if (finalPercentage === 1) {
+        await context.prisma.updateUser({
+          where: {
+            id
+          },
+          data: {
+            isTrusted: true
+          }
+        });
       }
     }
     const nextDay = new Date();
     nextDay.setDate(clientDate.getDate() + 1);
     const todayString = clientDate.toISOString().slice(0, 10);
     const nextDayString = nextDay.toISOString().slice(0, 10);
-    console.log(todayString);
-    console.log(nextDayString);
     // query for routines that don't have a day between today and the next day
     // REFACTOR: make it so that this is only done once a day by checking if the user has logged in today
     const routines = await context.prisma.routines({
