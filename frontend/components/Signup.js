@@ -174,7 +174,7 @@ class Signup extends Component {
                     box-shadow: 0px 7px 5px rgba(154, 165, 177, 0.5);
                     border-radius: 5px;
                   }
-                  @media (max-width: 400px) {
+                  @media (max-width: 800px) {
                     .signup-container {
                       margin: 32px 8px;
                     }

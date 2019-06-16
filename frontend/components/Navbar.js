@@ -19,11 +19,16 @@ const navbarStyle = css`
   @media (max-width: 400px) {
     .navbar {
       justify-content: center;
-      margin: 8px 8px;
     }
 
     a {
       padding: 4px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .navbar {
+      margin: 8px 8px;
     }
   }
 

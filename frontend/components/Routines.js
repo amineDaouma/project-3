@@ -33,6 +33,11 @@ const Routines = props => {
               margin: 8px 8px;
             }
           }
+          @media (max-width: 800px) {
+            .routine {
+              margin: 8px 8px;
+            }
+          }
         `}
       </style>
     </div>

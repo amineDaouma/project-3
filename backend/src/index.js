@@ -38,8 +38,7 @@ const options = {
   cors: {
     credentials: true,
     origin: process.env.FRONTEND_URL
-  },
-  port: 4000
+  }
 };
 
 server.start(options, items =>

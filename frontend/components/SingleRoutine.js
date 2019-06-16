@@ -128,7 +128,7 @@ class SingleRoutine extends Component {
           <style jsx>{`
             .container {
               margin: 4px auto;
-              max-width: 512px;
+              
               padding: 8px;
               height: 48px;
               background-color: white;
