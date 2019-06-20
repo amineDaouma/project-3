@@ -205,7 +205,9 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "isTrusted_ASC"
-  | "isTrusted_DESC";
+  | "isTrusted_DESC"
+  | "lastLoggedIn_ASC"
+  | "lastLoggedIn_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -298,6 +300,14 @@ export interface UserWhereInput {
   updatedAt_gte?: Maybe<DateTimeInput>;
   isTrusted?: Maybe<Boolean>;
   isTrusted_not?: Maybe<Boolean>;
+  lastLoggedIn?: Maybe<DateTimeInput>;
+  lastLoggedIn_not?: Maybe<DateTimeInput>;
+  lastLoggedIn_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastLoggedIn_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastLoggedIn_lt?: Maybe<DateTimeInput>;
+  lastLoggedIn_lte?: Maybe<DateTimeInput>;
+  lastLoggedIn_gt?: Maybe<DateTimeInput>;
+  lastLoggedIn_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -308,6 +318,7 @@ export interface UserCreateWithoutRoutinesInput {
   username: String;
   password: String;
   isTrusted: Boolean;
+  lastLoggedIn?: Maybe<DateTimeInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -405,6 +416,7 @@ export interface UserUpdateWithoutRoutinesDataInput {
   username?: Maybe<String>;
   password?: Maybe<String>;
   isTrusted?: Maybe<Boolean>;
+  lastLoggedIn?: Maybe<DateTimeInput>;
 }
 
 export interface RoutineUpdateWithWhereUniqueWithoutOwnedByInput {
@@ -418,6 +430,7 @@ export interface UserCreateInput {
   password: String;
   routines?: Maybe<RoutineCreateManyWithoutOwnedByInput>;
   isTrusted: Boolean;
+  lastLoggedIn?: Maybe<DateTimeInput>;
 }
 
 export interface RoutineUpdateManyWithoutOwnedByInput {
@@ -593,6 +606,7 @@ export interface UserUpdateInput {
   password?: Maybe<String>;
   routines?: Maybe<RoutineUpdateManyWithoutOwnedByInput>;
   isTrusted?: Maybe<Boolean>;
+  lastLoggedIn?: Maybe<DateTimeInput>;
 }
 
 export interface RoutineCreateOneWithoutDaysInput {
@@ -687,6 +701,7 @@ export interface UserUpdateManyMutationInput {
   username?: Maybe<String>;
   password?: Maybe<String>;
   isTrusted?: Maybe<Boolean>;
+  lastLoggedIn?: Maybe<DateTimeInput>;
 }
 
 export interface NodeNode {
@@ -716,6 +731,7 @@ export interface UserPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   isTrusted: Boolean;
+  lastLoggedIn?: DateTimeOutput;
 }
 
 export interface UserPreviousValuesPromise
@@ -727,6 +743,7 @@ export interface UserPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   isTrusted: () => Promise<Boolean>;
+  lastLoggedIn: () => Promise<DateTimeOutput>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -738,6 +755,7 @@ export interface UserPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   isTrusted: () => Promise<AsyncIterator<Boolean>>;
+  lastLoggedIn: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface AggregateDay {
@@ -828,6 +846,7 @@ export interface User {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   isTrusted: Boolean;
+  lastLoggedIn?: DateTimeOutput;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -846,6 +865,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   isTrusted: () => Promise<Boolean>;
+  lastLoggedIn: () => Promise<DateTimeOutput>;
 }
 
 export interface UserSubscription
@@ -866,6 +886,7 @@ export interface UserSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   isTrusted: () => Promise<AsyncIterator<Boolean>>;
+  lastLoggedIn: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserNullablePromise
@@ -886,6 +907,7 @@ export interface UserNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   isTrusted: () => Promise<Boolean>;
+  lastLoggedIn: () => Promise<DateTimeOutput>;
 }
 
 export interface AggregateUser {

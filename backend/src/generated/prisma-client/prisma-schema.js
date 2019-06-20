@@ -488,6 +488,7 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   isTrusted: Boolean!
+  lastLoggedIn: DateTime
 }
 
 type UserConnection {
@@ -502,6 +503,7 @@ input UserCreateInput {
   password: String!
   routines: RoutineCreateManyWithoutOwnedByInput
   isTrusted: Boolean!
+  lastLoggedIn: DateTime
 }
 
 input UserCreateOneWithoutRoutinesInput {
@@ -514,6 +516,7 @@ input UserCreateWithoutRoutinesInput {
   username: String!
   password: String!
   isTrusted: Boolean!
+  lastLoggedIn: DateTime
 }
 
 type UserEdge {
@@ -534,6 +537,8 @@ enum UserOrderByInput {
   updatedAt_DESC
   isTrusted_ASC
   isTrusted_DESC
+  lastLoggedIn_ASC
+  lastLoggedIn_DESC
 }
 
 type UserPreviousValues {
@@ -543,6 +548,7 @@ type UserPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   isTrusted: Boolean!
+  lastLoggedIn: DateTime
 }
 
 type UserSubscriptionPayload {
@@ -568,12 +574,14 @@ input UserUpdateInput {
   password: String
   routines: RoutineUpdateManyWithoutOwnedByInput
   isTrusted: Boolean
+  lastLoggedIn: DateTime
 }
 
 input UserUpdateManyMutationInput {
   username: String
   password: String
   isTrusted: Boolean
+  lastLoggedIn: DateTime
 }
 
 input UserUpdateOneRequiredWithoutRoutinesInput {
@@ -587,6 +595,7 @@ input UserUpdateWithoutRoutinesDataInput {
   username: String
   password: String
   isTrusted: Boolean
+  lastLoggedIn: DateTime
 }
 
 input UserUpsertWithoutRoutinesInput {
@@ -658,6 +667,14 @@ input UserWhereInput {
   updatedAt_gte: DateTime
   isTrusted: Boolean
   isTrusted_not: Boolean
+  lastLoggedIn: DateTime
+  lastLoggedIn_not: DateTime
+  lastLoggedIn_in: [DateTime!]
+  lastLoggedIn_not_in: [DateTime!]
+  lastLoggedIn_lt: DateTime
+  lastLoggedIn_lte: DateTime
+  lastLoggedIn_gt: DateTime
+  lastLoggedIn_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

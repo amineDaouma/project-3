@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
 const computeWeeklyCompletion = require("../utils/computeWeeklyCompletion");
-
+const sliceDate = require("../utils/sliceDate");
 const loggedInUser = async (parent, args, context, info) => {
+  console.time("Whole");
   const authorization = context.request.get("Authorization");
-  console.log(process.env.PRISMA_ENDPOINT);
+
   if (authorization) {
     const { id } = jwt.verify(
       authorization.replace("Bearer ", ""),
@@ -14,10 +15,8 @@ const loggedInUser = async (parent, args, context, info) => {
     // for reference, sunday-saturday is 0-6
     const dayOfTheWeek = clientDate.getDay();
 
-    // debug
-    console.log(dayOfTheWeek);
-
-    //
+    // REFACTOR: Do the weekly completion check only once per week on Sunday
+    // Create a weekly report field
     if (dayOfTheWeek === 0) {
       // TO-REFACTOR zone
       // This block definitely needs testing
@@ -53,11 +52,8 @@ const loggedInUser = async (parent, args, context, info) => {
             date_lte: clientDate.toISOString()
           }
         });
-        console.log(days);
         finalPercentage += computeWeeklyCompletion(days) / allRoutines.length;
       }
-      console.log(finalPercentage);
-      console.log(finalPercentage === 1);
       if (finalPercentage === 1) {
         await context.prisma.updateUser({
           where: {
@@ -71,45 +67,73 @@ const loggedInUser = async (parent, args, context, info) => {
     }
     const nextDay = new Date();
     nextDay.setDate(clientDate.getDate() + 1);
-    const todayString = clientDate.toISOString().slice(0, 10);
-    const nextDayString = nextDay.toISOString().slice(0, 10);
-    // query for routines that don't have a day between today and the next day
-    // REFACTOR: make it so that this is only done once a day by checking if the user has logged in today
-    const routines = await context.prisma.routines({
-      where: {
-        ownedBy: {
-          id
-        },
-        days_none: {
-          date_gte: todayString,
-          date_lte: nextDayString
-        }
-      }
-    });
+    const todayString = sliceDate(clientDate);
+    const nextDayString = sliceDate(nextDay);
+    // debug: query for last logged in
 
-    // map through the routines that have no record of today
-    // create Day element that is dated Today and link it to the routine
-    routines.map(async ({ id }) => {
-      await context.prisma.createDay({
-        date: todayString,
-        isCompleted: false,
-        partOf: {
-          connect: {
+    const lastLoggedIn = (await context.prisma.user({
+      id
+    }).$fragment(`
+    fragment LastLoggedIn on User {
+      lastLoggedIn
+    }
+    `)).lastLoggedIn;
+
+    const lastLoggedInString = sliceDate(lastLoggedIn);
+
+    if (!(lastLoggedInString === todayString)) {
+      // query for routines that don't have a day between today and the next day
+
+      const routines = await context.prisma.routines({
+        where: {
+          ownedBy: {
             id
+          },
+          days_none: {
+            date_gte: todayString,
+            date_lte: nextDayString
           }
         }
       });
+
+      // map through the routines that have no record of today
+      // create Day element that is dated Today and link it to the routine
+      routines.map(async ({ id }) => {
+        await context.prisma.createDay({
+          date: todayString,
+          isCompleted: false,
+          partOf: {
+            connect: {
+              id
+            }
+          }
+        });
+      });
+    }
+
+    await context.prisma.updateUser({
+      where: {
+        id
+      },
+      data: {
+        lastLoggedIn: clientDate
+      }
     });
 
     // the logged-in user will only be queried once all operations are complete
+    console.time("Query user");
     const user = await context.prisma.user(
       {
         id
       },
       info
     );
+    console.timeEnd("Query user");
+
+    console.timeEnd("Whole");
     return user;
   }
+  console.timeEnd("Whole");
   return null;
 };
 

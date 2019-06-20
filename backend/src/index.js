@@ -19,21 +19,6 @@ const server = new GraphQLServer({
 // express middleware
 server.express.use(cookieParser());
 
-// middleware to get the currently logged in user via cookie
-// server.express.use((req, res, next) => {
-//   let token = req.cookies["Authorization"];
-//   console.log(req.cookies);
-
-//   // console.log(token);
-//   if (token) {
-//     token = token.replace("Bearer ", "");
-//     const { id } = jwt.verify(token, process.env.APP_SECRET);
-//     req.id = id;
-//   }
-
-//   next();
-// });
-
 const options = {
   cors: {
     credentials: true,

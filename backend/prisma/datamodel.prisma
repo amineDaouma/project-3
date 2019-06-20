@@ -6,6 +6,7 @@ type User {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   isTrusted: Boolean!
+  lastLoggedIn: DateTime
 }
 
 type Day {

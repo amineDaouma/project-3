@@ -183,8 +183,7 @@ class CreateRoutine extends Component {
             textAlign: "center"
           }}
         >
-          (placeholder percentage)%! Great work. You earn yourself a new habit.
-          Or update an existing one.
+          Great work! You can now add, update, or delete a habit.
         </p>
         <hr />
         <style jsx>{`
